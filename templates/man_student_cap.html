@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
+    <title>学生选课和成绩管理系统</title>
+    <link rel="stylesheet" type="text/css" href="static/css/manager.css">
+    <style>
+        .kehao{
+            width:100px;
+            height:35px;
+        }
+    </style>
+</head>
+<body class="mybody">
+    <div class="mydiv">
+        <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
+            <div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
+            <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">学生信息列表</span>
+        </div>
+
+
+        <div class="head">
+            <div style="font-family:'Times New Roman';float:left;">
+                <form class="form-inline" action="{{url_for('selectCourse')}}" method="post">
+                    <div class="form-group">
+                        <label for="kehao">姓名</label>
+                        <input type="text" name="姓名">
+                    </div>
+                    <button type="submit" class="button_cha rtbtn">查询</button>
+                </form>
+            </div>
+            <div style="font-family:'Times New Roman';float:right;">
+                <a class="button rtbtn" href="{{url_for('add_student')}}">添加学生</a>
+                <a class="button rtbtn" href="javascript:void(0);" id="delselected">删除选中项</a>
+            </div>
+        </div>
+        <form id="form" action="{{url_for('deleteCource')}}" method="post">
+            <table border="1" class="table">
+                <tr class="tr">
+                    <th class="myth"><input type="checkbox" id="firstcb"></th>
+                    <th class="myth">学号</th>
+                    <th class="myth">姓名</th>
+                    <th class="myth">性别</th>
+                    <th class="myth">出生日期</th>
+                    <th class="myth">班级号</th>
+                    <th class="myth">密码</th>
+                    <th style="font-family:'Times New Roman';width: 101px">操作</th>
+                </tr>
+                {% for r in results %}
+                <tr>
+                    <td class="mytd"><input type="checkbox" name="couid" value="{{r[0]}}+{{r[1]}}+{{r[2]}}"></td>
+                    <td class="mytd">{{r[0]}}</td>
+                    <td class="mytd">{{r[1]}}</td>
+                    <td class="mytd">{{r[2]}}</td>
+                    <td class="mytd">{{r[3]}}</td>
+                    <td class="mytd">{{r[4]}}</td>
+                    <td class="mytd">{{r[5]}}</td>
+              
+                    <td class="mytd"><a href="{{url_for('updateCourcePage')}}?kehao={{r[0]}}&kexuhao={{r[1]}}&tea={{r[2]}}" class="buttons rtbtn2">修改</a>&nbsp;
+                        <a class="buttons rtbtn2" href="{{url_for('deleteCource')}}?kehao={{r[0]}}&kexuhao={{r[1]}}&tea={{r[2]}}">删除</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </form>
+        </div>
+        <script type="text/javascript">
+            if('{{result}}' != null && '{{result}}' != ''){
+                alert('{{result}}')
+            }
+        //给批量删除按钮添加单击事件
+        window.onload = function(){
+            document.getElementById("delselected").onclick = function(){
+                if(confirm("您确定要删除选中开课信息吗？")){
+                    //判读是否有选中条目
+                    var flag = false;
+                    var cbs = document.getElementsByName("couid");
+                    for(var i = 0; i < cbs.length; i++){
+                        if(cbs[i].checked){
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(flag){
+                        //表单提交
+                        document.getElementById("form").submit();
+                    }
+                    else{
+                        alert("您未选中任何选项！");
+                    }
+                }
+            }
+            //获取第一个cb，实现点击后全部选中
+            document.getElementById("firstcb").onclick = function(){
+                //获取下面列表中所有的cb
+                var cbs = document.getElementsByName("couid");
+                //遍历选中
+                for(var i = 0; i < cbs.length; i++){
+                    cbs[i].checked = this.checked;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

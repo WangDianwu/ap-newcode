@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
+    <title>学生选课和成绩管理系统</title>
+    <style>
+        table{
+            width:30%;
+            margin:50px auto;
+            height:500px;
+            border-collapse:collapse;
+            text-align:center;
+        }
+        table,td{
+            border:solid 1px black;
+            padding:15px 15px 15px 15px;
+        }
+        .button{
+            width: 80px;
+            height:30px;
+            background-color: #2379bc;
+            color:white;
+            text-align:center;
+            text-decoration: none;
+            display:inline-block;
+            border-radius: 4px;
+            padding:8px 10px;
+            margin:10px;
+        }
+        .photo{
+            width:150px;
+            height:180px;
+            margin:0 auto;
+        }
+        .first {
+            display: inline-block;
+            width: 100px;
+            color: RGBA(231, 77, 130, 1);
+        }
+        
+    </style>
+</head>
+<body class="mybody">
+    <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
+        <div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
+        <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">个人信息</span>
+    </div>
+    <div id="table" style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);padding:30px 15px;width: 50%;margin-left: auto;margin-right: auto;border-radius: 5px;margin-top: 15px;box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
+        <span style="font-family:'Times New Roman';display: inline-block;width: 100px;color: RGBA(231, 77, 130, 1);">学号：</span><span>{{student[0]}}</span></br></br>
+        <span class="first">姓名：</span><span>{{student[1]}}</span></br></br>
+        <span class="first">性别：</span><span>{{student[2]}}</span></br></br>
+        <span class="first">出生日期：</span><span>{{student[3]}}</span></br></br>
+        <span class="first">专业：</span><span>{{student[4]}}</span></br></br>
+        <span class="first">班级：</span><span>{{student[5]}}</span>
+    </div>
+
+</body>
+</html>

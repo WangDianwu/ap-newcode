@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
+    <title>学生选课和成绩管理系统</title>
+    <link rel="stylesheet" href="static/login2/css/style.css">
+</head>
+<body class="mybody">
+<div class="content">
+        <div class="form sign-in">
+            <h2>欢迎回来</h2>
+                    <form name="input" action="/result" method="post" onsubmit="return checkInfo();">
+                <label>
+                    <span>用户名</span>
+                    <input type="text" name="username" />
+                </label>
+                <label>
+                    <span>密码</span>
+                    <input type="password" name="password" />
+                </label>
+                        <div  style="font-family:'Times New Roman';text-align: center;margin-top: 15px">
+                            <input style="font-family:'Times New Roman';width: 30px;display: inline-block;" type="radio" name="shenfen" value="管理员">管理员
+                            <input style="font-family:'Times New Roman';width: 30px;display: inline-block;"  type="radio" name="shenfen" value="教师">教师
+                            <input  style="font-family:'Times New Roman';width: 30px;display: inline-block;" type="radio" name="shenfen" value="学生">学生
+                        </div>
+
+                <!-- <p class="forgot-pass"><a href="javascript:">忘记密码？</a></p> -->
+                <button type="submit" class="submit">登 录</button>
+            </form>
+            <!-- <button type="button" class="fb-btn">使用 <span>facebook</span> 帐号登录</button> -->
+        </div>
+        <div class="sub-cont">
+            <div class="img">
+                <div class="img__text m--up">
+                    <!-- <h2>还未注册？</h2> -->
+                    <!-- <p>立即注册，发现大量机会！</p> -->
+                </div>
+                <div class="img__text m--in">
+                    <h2>已有帐号？</h2>
+                    <p>有帐号就登录吧，好久不见了！</p>
+                </div>
+              <!--   <div class="img__btn">
+                    <span class="m--up">注 册</span>
+                    <span class="m--in">登 录</span>
+                </div> -->
+            </div>
+            <div class="form sign-up" style="font-family:'Times New Roman';overflow-y: scroll;">
+                <h2>立即注册</h2>
+                <form id="form2" action="/save" method="post"  enctype="multipart/form-data">
+
+
+
+                    <input type="text" name="database" value="admin" style="font-family:'Times New Roman';display: none;" />
+                    <input type="text" name="table" value="XueSheng" style="font-family:'Times New Roman';display: none;" />
+                </form>
+                <!-- <button type="button" class="fb-btn">使用 <span>facebook</span> 帐号注册</button> -->
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function load(i){
+            var con = document.getElementsByTagName("a");
+            //获取要显示或者隐藏的对象
+            var de = document.getElementsByClassName("demo");
+            if(i == 0){
+                con[0].classList.add("active");
+                con[0].classList.remove("noactive");
+                con[1].classList.add("noactive");
+                con[1].classList.remove("active");
+                de[1].style.display = 'none';
+                de[0].style.display = 'block';
+            }
+            else{
+                con[1].classList.add("active");
+                con[1].classList.remove("noactive");
+                con[0].classList.add("noactive");
+                con[0].classList.remove("active");
+                de[0].style.display = 'none';
+                de[1].style.display = 'block';
+            }
+        }
+        function checkInfo(){
+            var yonghu = document.forms["input"]["username"].value;
+            if(yonghu == null || yonghu == ""){
+                alert("账号不能为空！");
+                return false;
+            }
+            var mima = document.forms["input"]["password"].value;
+            var t2 = /^[a-zA-Z0-9@#*$!%]*$/;
+            if(mima == null || mima == ""){
+                alert("密码不能为空！");
+                return false;
+            }
+            //正确地登录密码长度为6-16位，仅可用英文、数字、特殊字符@#*$!%！
+            else if(mima.length < 6 || mima.length > 16){
+                alert("请输入正确的密码，长度为6-16位！");
+                return false;
+            }
+            else if(!t2.test(mima)){
+                alert("请输入正确的密码,仅可用英文、数字、特殊字符@#*$!%！");
+                return false;
+            }
+            var shenfen = document.forms["input"]["shenfen"];
+            if(shenfen[0].checked == false && shenfen[1].checked == false && shenfen[2].checked == false){
+                alert("请选择身份！");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

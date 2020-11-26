@@ -1,0 +1,92 @@
+body{
+    height:100%;
+    padding: 0px;
+    margin: 0px;
+}
+* {
+    box-sizing: border-box;
+}
+.head{
+    width:100%;
+    height:10vh;
+    background-size: cover;
+    color: #258077;
+    background-image: url('../cfea8cc41d6d5bbd8eee8a9d6619f6bb.jpg');
+}
+.head span{
+    line-height: 10vh;
+    color: black;
+    font-size: 22px;
+    font-weight: bold;
+}
+.head h2{
+    margin: 0px
+}
+.welcome{
+    position:absolute;
+    left:100px;
+    color: black;
+    line-height: 10vh;
+
+}
+.exit{
+    position:absolute;
+    right:50px;
+    font-size: 13px;
+    line-height: 10vh;
+    float: right;margin-right: 15px;
+    cursor: pointer;
+
+}
+.exit a{
+    text-decoration: none;
+    color:#258077;
+    color: black;
+
+}
+.left{
+    float:left;
+    width:20%;
+    height:750px;
+    background-color: white;
+}
+.right{
+    float:left;
+    height:750px;
+    width:80%;
+}
+.context{
+    height: 80vh;
+}
+.context:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+.left ul{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+    width:100%;
+    /*height:100%;*/
+}
+.left ul li a{
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding: 10px 0px;
+    line-height:40px;
+    font-size: 20px;
+    text-align: center;
+}
+.left ul li a:hover {
+    background-color: RGBA(254, 243, 241, 1);
+    color: RGBA(231, 77, 130, 1);
+    font-weight: bold;
+}
+
+.rtbtn{
+    background: RGBA(231, 77, 130, 1)!important;
+    padding: 0px 15px!important;
+    height: 40px;line-height: 40px;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
+    <title>学生选课和成绩管理系统</title>
+    <link rel="stylesheet" type="text/css" href="static/css/hand.css">
+</head>
+<body class="mybody">
+    <div class="body">
+        <div class="mydiv">
+            <form name="input" class="form-inline" action="{{url_for('stu_cha_mark')}}" method="post" onsubmit="return checkInfo();">
+                <input type="hidden" id="xuehao" value="{{xuehao}}" name="xuehao">
+                <div class="form-group">
+                    <label for="input_kehao">请输入课程编号</label>
+                    <input type="text" class="" id="input_kehao" name="kehao">
+                </div>
+                <div class="form-group">
+                    <label for="input_kexuhao">请输入课序号</label>
+                    <input type="text" class="" id="input_kexuhao" name="kexuhao">
+                </div>
+                <button type="submit" class="button_cha" style="font-family:'Times New Roman';background: RGBA(231, 77, 130, 1)">查询</button>
+            </form>
+        </div>
+
+        <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
+            <div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
+            <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">成绩</span>
+        </div>
+
+        <div id="table" style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);padding:30px 15px;width: 50%;margin-left: auto;margin-right: auto;border-radius: 5px;margin-top: 15px;box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
+            <span style="font-family:'Times New Roman';display: inline-block;width: 100px;color: RGBA(231, 77, 130, 1);">平时成绩：</span><span>{{pingshi}}</span></br></br>
+            <span class="first">考试成绩：</span><span>{{kaoshi}}</span></br></br>
+            <span class="first">总成绩：</span><span>{{pingshi * 0.3 + kaoshi * 0.7}}</span></br></br>
+        </div>
+
+        <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
+            <div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
+            <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">成绩单</span>
+        </div>
+        <table border="1" class="table" style="font-family:'Times New Roman';margin-top: 15px">
+            <tr class="tr">
+                <th class="myth">课程编号</th>
+                <th class="myth">课序号</th>
+                <th class="myth">课名</th>
+                <th class="myth">学分</th>
+                <th class="myth">类别</th>
+                <th class="myth">成绩</th>
+            </tr>
+            {% for r in results %}
+            <tr class="tr">
+                <td class="mytd">{{r[0]}}</td>
+                <td class="mytd">{{r[1]}}</td>
+                <td class="mytd">{{r[2]}}</td>
+                <td class="mytd">{{r[3]}}</td>
+                <td class="mytd">{{r[4]}}</td>
+                <td class="mytd">{{r[5] * 0.3 + r[6] * 0.7}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <script type="text/javascript">
+        if('{{result}}' != null && '{{result}}' != ''){
+            alert('{{result}}')
+        }
+        function checkInfo(){
+            var kh = document.forms["input"]["kehao"].value;
+            if(kh == null || kh == ""){
+                alert("课程编号不能为空！！");
+                return false;
+            }
+            var kxh = document.forms["input"]["kexuhao"].value;
+            if(kxh == null || kxh == ""){
+                alert("课序号不能为空！！");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
+    <title>学生选课和成绩管理系统</title>
+    <link rel="stylesheet" type="text/css" href="static/css/action.css">
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-menu{
+            display: none;
+            position: absolute;
+            background-color: #b6b6b6;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        }
+        .dropdown-menu a{
+            color: black;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .dropdown-menu a:hover {
+            background-color: #949494;
+        }
+        .dropdown:hover .btn {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
+</head>
+<body class="mybody">
+    <div class="mydiv">
+        <div class="head">
+            <div class="welcome"><h2>欢迎您，学生{{name}}</h2></div>
+            <!-- <div class="exit"><h2><a href="/">退出登录</a></h2></div> -->
+        </div>
+        <div class="context">
+            <div class="left">
+                <ul>
+                    <li class="myli"><a href="http://localhost:8080/self_info?xuehao={{xuehao}}&shenfen=学生" target="iframe">个人中心</a></li>
+                    <li class="myli"><a href="http://localhost:8080/mima?xuehao={{xuehao}}&shenfen=学生" target="iframe">修改密码</a></li>
+<!--                    <li class="myli"><a href="http://localhost:8080/sel_cou?xuehao={{xuehao}}" target="iframe">选课中心</a></li>-->
+                    <li class="myli">
+                        <div class="dropdown" style="font-family:'Times New Roman';width: 100%">
+                        <a class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="font-family:'Times New Roman';width: 100%">
+                            选课中心
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="font-family:'Times New Roman';width: 100%">
+                            <a href="{{url_for('into_bixiu')}}?xuehao={{xuehao}}" target="iframe">必修</a>
+                            <a href="{{url_for('into_tongxuan')}}?xuehao={{xuehao}}" target="iframe">通选限选</a>
+                            <a href="{{url_for('into_zhuanye')}}?xuehao={{xuehao}}" target="iframe">专业限选</a>
+                        </div>
+                    </div>
+                    </li>
+                    <li class="myli"><a href="{{url_for('into_tuike')}}?xuehao={{xuehao}}" target="iframe">退课中心</a></li>
+                    <li class="myli"><a href="{{url_for('into_stu_mark')}}?xuehao={{xuehao}}" target="iframe">成绩查询</a></li>
+                                        <li class="myli"><a  href="/">退出登录</a></li>
+
+                </ul>
+            </div>
+            <div class="right"><iframe src="http://localhost:8080/feng" width="100%" height="100%" name="iframe"></iframe></div>
+        </div>
+    </div>
+</body>
+</html>

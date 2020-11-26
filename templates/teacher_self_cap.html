@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="static/icon.jpg" rel="icon" type="image/x-icon" />
+		<title>学生选课和成绩管理系统</title>
+		<style>
+			.first {
+				display: inline-block;
+				width: 100px;
+				color: RGBA(231, 77, 130, 1);
+			}
+			
+			.button {
+				width: 80px;
+				height: 30px;
+				background-color: #2379bc;
+				color: white;
+				text-align: center;
+				text-decor ation: none;
+				display: inline-block;
+				border-radius: 4px;
+				padding: 8px 10px;
+				margin: 10px;
+			}
+			
+			.photo {
+				width: 150px;
+				height: 180px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body class="mybody">
+		<div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
+			<div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
+			<span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">个人信息</span>
+		</div>
+		<div id="table" style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);padding:30px 15px;width: 50%;margin-left: auto;margin-right: auto;border-radius: 5px;margin-top: 15px;box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
+			<span class="first">编号：</span><span>{{teacher[0]}}</span></br></br>
+			<span class="first">姓名：</span><span>{{teacher[1]}}</span></br></br>
+			<span class="first">性别：</span><span>{{teacher[2]}}</span></br></br>
+			<span class="first">所属系所：</span><span>{{teacher[3]}}</span></br></br>
+			<span class="first">职称：</span><span>{{teacher[4]}}</span>
+		</div>
+
+	</body>
+
+</html>

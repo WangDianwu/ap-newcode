@@ -1,0 +1,67 @@
+.head{
+            width:100%;
+            clear:both;
+        }
+        .head a{
+            float: left;
+            width: 100px;
+            /*border-bottom: solid 1px #ccc;*/
+            font-size: 16px;
+            line-height: 20px;
+            display: block;
+            /*border-right:solid 1px;*/
+            text-align: center;
+            text-decoration: none;
+            margin-left: 20px;
+            color:white;
+            background: RGBA(231, 77, 130, 1);
+
+        }
+        .table{
+            width:100%;
+            border-collapse:collapse;
+            clear:both;
+        }
+        .table td, .table th{
+            border:1px solid RGBA(231, 77, 130, 1);
+            padding:3px 7px 2px 7px;
+            text-align: center;
+        }
+        .table th{
+            background-color: RGBA(231, 77, 130, 1);
+        }
+        .buttons{
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid black;
+            display: inline-block;
+            padding: 5px 8px;
+            background-color: RGBA(231, 77, 130, 1);
+            color:white;
+        }
+        /*.form-group{*/
+        /*    float:left;*/
+        /*    margin-right: 10px;*/
+        /*}*/
+        /*.button_cha{*/
+        /*    background-color: #2379bc;*/
+        /*    border:none;*/
+        /*    color:white;*/
+        /*    text-align:center;*/
+        /*    text-decoration: none;*/
+        /*    display:inline-block;*/
+        /*    border-radius: 4px;*/
+        /*    padding:8px 10px;*/
+        /*}*/
+        select{
+            width:100px;
+            height:30px;
+            font-family:Microsoft YaHei;
+        }
+
+
+        .rtbtn{
+            background: RGBA(231, 77, 130, 1)!important;
+    padding: 0px 15px!important;
+        }
