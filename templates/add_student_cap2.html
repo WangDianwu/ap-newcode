@@ -4,6 +4,7 @@
     <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
     <title>学生选课和成绩管理系统</title>
     <link rel="stylesheet" type="text/css" href="static/css/manager2.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         input[type=submit], input[type=button]{
             width:100px;
@@ -22,7 +23,7 @@
             float: left;
             line-height: 40px;
         }
-        select,input[typle=text]{
+        select,input[typle=text],input[typle=date]{
             width: 80%;
             float: left;
             height: 40px;
@@ -36,19 +37,19 @@
 <body class="mybody">
  <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
     <div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
-    <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">添加学生页面</span>
+    <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">修改学生页面</span>
 </div>
 
 
 <div class="body" style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
-   <form name="input" action="/savedata1" method="post" onsubmit="return checkInfo();" enctype="multipart/form-data">
+   <form name="input" action="/updatedata1" method="post" onsubmit="return checkInfo();" enctype="multipart/form-data">
     <div class="mydiv">
         <label for="didian">学号:</label>
-        <input type="text" name="学号">
+        <input type="text" name="学号" value="{{result[0][0]}}">
     </div>
     <div class="mydiv">
         <label >姓名</label>
-        <input type="text"  name="姓名">
+        <input type="text"  name="姓名" value="{{result[0][1]}}">
     </div>
     <div class="mydiv">
         <label >性别：</label>
@@ -56,23 +57,26 @@
             <option value="男">男</option>
             <option value="女">女</option>
         </select>
+        <script type="text/javascript">
+            $('select').val('{{result[0][2]}}')
+        </script>
     </div>
     
     <div class="mydiv">
         <label >出生日期：</label>
-        <input type="date"  name="出生日期">
+        <input type="date"  name="出生日期" value="{{result[0][3]}}">
     </div>
     <div class="mydiv">
         <label >专业：</label>
-        <input type="text"  name="专业">
+        <input type="text"  name="专业" value="{{result[0][4]}}">
     </div>
     <div class="mydiv">
         <label >班级号：</label>
-        <input type="text"  name="班级号">
+        <input type="text"  name="班级号" value="{{result[0][5]}}">
     </div>
      <div class="mydiv">
         <label >密码：</label>
-        <input type="text"  name="密码">
+        <input type="text"  name="密码" value="{{result[0][6]}}">
     </div>
     
      <div class="mydiv" style="display: none;">
