@@ -654,7 +654,7 @@ def into_tuike():
     # 计算当前页数，查询该范围内的必修课
     current_page = page
     start_hang = (page - 1) * hang
-    result, _ = GetSql2("select * from yixuan,t_student_Course where yixuan.course_num = t_student_Course.course_num and yixuan.课序号 = t_student_Course.course_id and student_num = '"+xuehao+"' limit " + str(hang) + " offset " + str(start_hang) + "")
+    result, _ = GetSql2("select * from yixuan,t_student_Course where yixuan.course_num = t_student_Course.course_num and yixuan.course_id = t_student_Course.course_id and student_num = '"+xuehao+"' limit " + str(hang) + " offset " + str(start_hang) + "")
     # 根据result中的课程编号，获取开课班级
     for i in range(len(result)):
         sql = "select calss_name from t_open_class, t_class_info where t_class_info.class_num = t_open_class.class_num and course_num = '" + result[i][0] + "'"
