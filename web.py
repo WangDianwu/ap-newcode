@@ -8,11 +8,15 @@ import time
 
 #引入登陆模块
 from  login import  login_api
+#引入后台模块
+from admin import admin_api
 
 app = Flask(__name__)
 app.secret_key = "jJInfdd4444dewp(f8e5ffkd*9&jfkl"
 # 注册登录接口    
 app.register_blueprint(login_api)
+#注册后台模块
+app.register_blueprint(admin_api)
 
 #修改开设课程
 @app.route('/updateCource', methods=['POST'])
@@ -47,6 +51,21 @@ def luru():
     page = request.args.get('page')
 
     return render_template("luru_cap.html", xuehao=xuehao, kehao=kehao, kexuhao=kexuhao, bianhao=bianhao, page=page)
+
+#查询开设课程
+@app.route('/selectCourse', methods=['POST'])
+def selectCourse():
+    r = request.args.get('result', '')
+    kehao = request.form.get('kehao')
+    kexuhao = request.form.get('kexuhao')
+    # 查询教师授课表
+    result, _ = GetSql2("select * from t_teaching where course_num = '"+str(kehao)+"' and course_id = '"+str(kexuhao)+"'")
+    # 查询开课班级表
+    for i in range(len(result)):
+        result1, _ = GetSql2("select calss_name from t_open_class, t_class_info where t_open_class.class_num = t_class_info.class_num and course_num = '" + str(
+            result[i][0]) + "' and course_id = '" + str(result[i][1]) + "'")
+        result[i] = (result[i], result1)
+    return render_template("man_cou_cap.html", results=result, result=r)
 
 #查询学生信息表
 @app.route('/studentlist', methods=['POST', 'GET'])
@@ -100,20 +119,6 @@ def excel():
     result, _ = GetSql2("select t_teaching.course_num, course_id, course_name, credit, course_type from t_teaching, t_course_info where t_teaching.course_num = t_course_info.course_num and teacher_num = '"+str(bianhao)+"'")
     return render_template("excel_cap.html", bianhao=bianhao, results=result, result=r)
 
-#查询开设课程
-@app.route('/selectCourse', methods=['POST'])
-def selectCourse():
-    r = request.args.get('result', '')
-    kehao = request.form.get('kehao')
-    kexuhao = request.form.get('kexuhao')
-    # 查询教师授课表
-    result, _ = GetSql2("select * from t_teaching where course_num = '"+str(kehao)+"' and course_id = '"+str(kexuhao)+"'")
-    # 查询开课班级表
-    for i in range(len(result)):
-        result1, _ = GetSql2("select calss_name from t_open_class, t_class_info where t_open_class.class_num = t_class_info.class_num and course_num = '" + str(
-            result[i][0]) + "' and course_id = '" + str(result[i][1]) + "'")
-        result[i] = (result[i], result1)
-    return render_template("man_cou_cap.html", results=result, result=r)
 
 #个人中心
 @app.route('/self_info', methods=["GET"])
@@ -364,13 +369,6 @@ def xiugai():
 
     return render_template("xiugai_cap.html", xuehao=xuehao, kehao=kehao, kexuhao=kexuhao, bianhao=bianhao, page=page, result=result)
 
-
-@app.route('/kechenglist', methods=['POST', 'GET'])
-def kechenglist():
-    r = request.args.get('result', '')
-    #查询教师授课表
-    result,_ = GetSql2("select * from t_course_info")
-    return render_template("man_kecheng_cap.html", results=result, result=r)
 
 #单个录入学生成绩
 @app.route('/luru_mark', methods=['POST'])
@@ -679,10 +677,6 @@ def t_teaching():
 
     return render_template("tea_cou_cap.html", bianhao=bianhao, results=result)
 
-
-@app.route('/add_kecheng', methods=['POST', 'GET'])
-def add_kecheng():
-    return render_template("add_kecheng_cap.html")
 
 
 @app.route('/add_student', methods=['POST', 'GET'])

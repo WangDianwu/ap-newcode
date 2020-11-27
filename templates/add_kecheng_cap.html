@@ -48,50 +48,64 @@
     </div>
     <div class="body"
         style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
-        <form name="input" action="{{url_for('addCourse')}}" method="post" onsubmit="return checkInfo();">
+        <form name="input" action="{{url_for('admin_api.addCourse')}}" method="post" onsubmit="return checkInfo();">
             <div class="mydiv">
-                <label for="didian">课程编号:</label>
-                <input type="text" id="didian" name="课程编号">
+                <label for="course_num">课程编号:</label>
+                <input type="text" id="course_num" name="course_num">
             </div>
             <div class="mydiv">
-                <label for="zhou">名称：</label>
-                <input type="text" id="zhou" name="名称">
+                <label for="course_name">名称：</label>
+                <input type="text" id="course_name" name="course_name">
             </div>
             <div class="mydiv">
-                <label for="zhou">总学时：</label>
-                <input type="text" id="zhou" name="总学时">
-            </div>
-
-            <div class="mydiv">
-                <label for="zhou">总分：</label>
-                <input type="text" id="zhou" name="总分">
-            </div>
-            <div class="mydiv">
-                <label for="zhou">课程类别：</label>
-                <input type="text" id="zhou" name="课程类别">
+                <label for="total_hours">总学时：</label>
+                <input type="text" id="total_hours" name="total_hours">
             </div>
 
             <div class="mydiv">
-                <input type="submit" class="rtbtn" value="保存">
+                <label for="credit">总分：</label>
+                <input type="text" id="credit" name="credit">
+            </div>
+            <div class="mydiv">
+                <label for="xing">课程类别：</label>
+                <select id="course_type" name="course_type">
+                    <option value="必修">必修</option>
+                    <option value="专业限选">专业限选</option>
+                    <option value="通选限选">通选限选</option>
+                </select>
+            </div>
+
+            <div class="mydiv">
+                <input type="submit" class="rtbtn" value="保存" >
                 <input type="button" class="rtbtn" value="返回" onclick="javascript:history.back();">
             </div>
         </form>
     </div>
     <script type="text/javascript">
         function checkInfo() {
-            var course_id = document.forms["input"]["kexuhao"].value;
-            if (course_id == null || course_id == "") {
-                alert("课序号不能为空！");
+            var course_num = document.forms["input"]["course_num"].value;
+            if (course_num == null || course_num == "") {
+                alert("请输入课程编号");
                 return false;
             }
-            var teaching_max = document.forms["input"]["num"].value;
-            if (nteaching_maxum == null || teaching_max == "") {
-                alert("选课人数上限不能为空！");
+            var course_name = document.forms["input"]["course_name"].value;
+            if (course_name == null || course_name == "") {
+                alert("请输入课程名称");
                 return false;
             }
-            var class_addr = document.forms["input"]["didian"].value;
-            if (class_addr == null || class_addr == "") {
-                alert("地点不能为空！！");
+            var total_hours = document.forms["input"]["total_hours"].value;
+            if (total_hours == null || total_hours == "") {
+                alert("请输入总学时");
+                return false;
+            }
+            var credit = document.forms["input"]["credit"].value;
+            if (credit == null || credit == "") {
+                alert("请输入学分");
+                return false;
+            }
+            var course_type = document.forms["input"]["course_type"].value;
+            if (course_type == null || course_type == "") {
+                alert("请选择课程类别");
                 return false;
             }
             return true;
