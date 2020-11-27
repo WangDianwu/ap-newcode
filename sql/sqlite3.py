@@ -3,7 +3,7 @@ import sqlite3
 # 增
 def useSqliteInsert(dic):
     # print("进入插入")
-    conn = sqlite3.connect(r'database/'+dic["database"]+'.sqlite3')
+    conn = sqlite3.connect(r'sql/'+dic["database"]+'.db')
     cursor = conn.cursor()
     string = ''
     string2 = ''
@@ -49,7 +49,7 @@ def dict_factory(cursor, row):
     return d
 # 删
 def useSqliteDelete(data):
-    conn = sqlite3.connect(r'database/'+data['database']+'.sqlite3')
+    conn = sqlite3.connect(r'sql/'+data['database']+'.db')
     conn.row_factory = dict_factory 
     cursor = conn.cursor()
     print('===========================')
@@ -61,7 +61,7 @@ def useSqliteDelete(data):
 
 # 查
 def useSqliteSelect(database,table):
-    conn = sqlite3.connect(r'database/'+database+'.sqlite3')
+    conn = sqlite3.connect(r'sql/'+database+'.db')
     conn.row_factory = dict_factory 
     cursor = conn.cursor()
     cursor.execute('SELECT * from '+table)
@@ -73,7 +73,7 @@ def useSqliteSelect(database,table):
 
 # 查
 def useSqliteSelectByKey(dic):
-    conn = sqlite3.connect(r'database/'+dic['database']+'.sqlite3')
+    conn = sqlite3.connect(r'sql/'+dic['database']+'.db')
     conn.row_factory = dict_factory 
     cursor = conn.cursor()
     # print('SELECT * from '+table+' WHERE nickname = '+key)
@@ -86,7 +86,7 @@ def useSqliteSelectByKey(dic):
     return values
 
 def useSqliteSelectByPage(dic):
-    conn = sqlite3.connect(r'database/'+dic['database']+'.sqlite3')
+    conn = sqlite3.connect(r'sql/'+dic['database']+'.db')
     conn.row_factory = dict_factory 
     cursor = conn.cursor()
     # print('SELECT * from '+table+' WHERE nickname = '+key)
@@ -101,7 +101,7 @@ def useSqliteSelectByPage(dic):
 
 # 改
 def useSqliteUpdate(dic):
-    conn = sqlite3.connect(r'database/'+dic["database"]+'.sqlite3')
+    conn = sqlite3.connect(r'sql/'+dic["database"]+'.db')
     cursor = conn.cursor()
     string3 = ''
     

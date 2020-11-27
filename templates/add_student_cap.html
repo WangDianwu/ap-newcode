@@ -41,35 +41,45 @@
 
 
 <div class="body" style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
-   <form name="input" action="{{url_for('addCourse')}}" method="post" onsubmit="return checkInfo();">
+   <form name="input" action="/savedata" method="post" onsubmit="return checkInfo();" enctype="multipart/form-data">
     <div class="mydiv">
         <label for="didian">学号:</label>
-        <input type="text" id="didian" name="学号">
+        <input type="text" name="学号">
     </div>
     <div class="mydiv">
-        <label for="zhou">姓名</label>
-        <input type="text" id="zhou" name="姓名">
+        <label >姓名</label>
+        <input type="text"  name="姓名">
     </div>
     <div class="mydiv">
-        <label for="zhou">性别：</label>
-        <input type="text" id="zhou" name="性别">
+        <label >性别：</label>
+        <input type="text"  name="性别">
     </div>
     
     <div class="mydiv">
-        <label for="zhou">出生日期：</label>
-        <input type="text" id="zhou" name="出生日期">
+        <label >出生日期：</label>
+        <input type="text"  name="出生日期">
     </div>
     <div class="mydiv">
-        <label for="zhou">专业：</label>
-        <input type="text" id="zhou" name="专业">
+        <label >专业：</label>
+        <input type="text"  name="专业">
     </div>
     <div class="mydiv">
-        <label for="zhou">班级号：</label>
-        <input type="text" id="zhou" name="班级号">
+        <label >班级号：</label>
+        <input type="text"  name="班级号">
     </div>
      <div class="mydiv">
-        <label for="zhou">密码：</label>
-        <input type="text" id="zhou" name="密码">
+        <label >密码：</label>
+        <input type="text"  name="密码">
+    </div>
+    
+     <div class="mydiv" style="display: none;">
+        <label >密码：</label>
+        <input type="text"  value="database" name="database">
+    </div>
+    
+     <div class="mydiv" style="display: none;">
+        <label >密码：</label>
+        <input type="text"  value="student" name="table">
     </div>
     
     <div class="mydiv">
