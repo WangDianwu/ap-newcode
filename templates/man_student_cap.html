@@ -26,7 +26,7 @@
                 <form class="form-inline" action="{{url_for('cha1')}}" method="post"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="kehao">姓名</label>
-                        <input type="text" name="姓名">
+                        <input type="text" name="student_name">
                     </div>
                     <button type="submit" class="button_cha rtbtn">查询</button>
                 </form>
@@ -58,7 +58,7 @@
                     <td class="mytd">{{r[4]}}</td>
                     <td class="mytd">{{r[5]}}</td>
               
-                    <td class="mytd"><a href="/add_student_cap2?学号={{r[0]}}" class="buttons rtbtn2">修改</a>&nbsp;
+                    <td class="mytd"><a href="/add_student_cap2?student_num={{r[0]}}" class="buttons rtbtn2">修改</a>&nbsp;
                         <a class="buttons rtbtn2" href="/deldata1?学号={{r[0]}}&table=student&database=database">删除</a></td>
                     </tr>
                     {% endfor %}

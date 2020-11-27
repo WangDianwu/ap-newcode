@@ -6,10 +6,11 @@ from sql.sqlite3 import *
 import json
 import time
 app = Flask(__name__)
-app.secret_key = "jJInfdd4444dewp(f8e5ffkd*9&jfkl"      # flash的消息都存储在session，需要一个会话密匙，密匙随便输入就行，如果对保密性要求高的话，可以使用相关的密匙生成函数，不在细讲
+app.secret_key = "jJInfdd4444dewp(f8e5ffkd*9&jfkl"      
+
+#修改开设课程
 @app.route('/updateCource', methods=['POST'])
 def updateCource():
-    #修改开设课程
     kehao = request.form.get('kehao')
     kexuhao = request.form.get('kexuhao')
     tea = request.form.get('tea')
@@ -20,28 +21,18 @@ def updateCource():
     xing = request.form.get('xing')
     jie = request.form.get('jie')
     opens = request.form.getlist('open')
-    #将数据存储到数据库中
-    data = dict(
-        course_num=kehao,
-        course_id=kexuhao,
-        teacher_num=tea,
-        teaching_max=num,
-        open_date=kaike,
-        class_addr=didian,
-        weeks_count=zhou,
-        week_num=xing,
-        sections_num=jie
-    )
+    #更新授课表
     result1 = UpdatedataTwo("update t_teaching set teacher_num = '"+str(tea)+"', teaching_max = "+str(num)+", open_date = '"+str(kaike)+"', class_addr = '"+str(didian)+"', weeks_count='"+str(zhou)+"', week_num="+str(xing)+", sections_num="+str(jie)+" where course_num = '"+str(kehao)+"' and course_id = '"+str(kexuhao)+"'")
     for o in opens:
         data1 = dict(course_num=kehao, course_id=kexuhao, class_num=o)
+        #更新开课班级表
         UpdatedataTwo("update t_open_class set class_num = '"+str(o)+"' where course_num = '"+str(kehao)+"' and course_id = '"+str(kexuhao)+"'")
 
     return redirect(url_for('course', result=result1))
 
+#单个录入学生成绩界面
 @app.route('/luru', methods=['GET'])
 def luru():
-    #单个录入学生成绩界面
     #获取学生的学号,课程的课程编号和课序号
     xuehao = request.args.get('xuehao')
     kehao = request.args.get('kehao')
@@ -51,57 +42,65 @@ def luru():
 
     return render_template("luru_cap.html", xuehao=xuehao, kehao=kehao, kexuhao=kexuhao, bianhao=bianhao, page=page)
 
+#查询学生信息表
 @app.route('/studentlist', methods=['POST', 'GET'])
 def studentlist():
     r = request.args.get('result', '')
-    #查询学生信息表
-    result,_ = GetSql2("select * from student")
-    print(result)
-
+    result,_ = GetSql2("select * from t_student_info")
     return render_template("man_student_cap.html", results=result, result=r)
-@app.route('/result', methods=['POST', 'GET'])   #登录信息处理界面，处理由'/'传送过来的表单信息
+
+#登录信息处理界面，处理由'/'传送过来的表单信息
+@app.route('/result', methods=['POST', 'GET'])   
 def result():
     if request.method == 'POST':
-        #获取表单数据
-        username = request.form.get('username')
+        #用户名
+        username = request.form.get('username') 
+        #密码
         password = request.form.get('password')
-        shenfen = request.form.get('shenfen')
-        #从数据库中验证信息是否正确
+        #登陆类型
+        usertype = request.form.get('usertype')
         name = ''
-        if shenfen == '学生':
+        #学生
+        if usertype == 'student':
             result, _ = GetSql2("select student_name from t_student_info where student_num = '"+username+"' and pwd = '"+password+"'")
-        if shenfen == '教师':
+        #教师
+        if usertype == 'teacher':
             result, _ = GetSql2("select teacher_name from t_teacher_info where teacher_num = '"+username+"' and pwd = '"+password+"'")
-        if shenfen == '管理员':
+        #管理员
+        if usertype == 'admin':
             result, _ = GetSql2("select * from t_sys_info where sys_num = '"+username+"' and pwd = '"+password+"'")
-        if result: #登录成功，页面跳转到相应的功能页面
-            # return '登录成功'
+        #登录成功，页面跳转到相应的功能页面
+        if result: 
             name = result[0][0]
-            if shenfen == '管理员':
+            if usertype == 'admin':
                 return render_template("manager_cap.html", name=username)
-            if shenfen == '教师':
+            if usertype == 'teacher':
                 return render_template("teacher_cap.html", name=name, bianhao=username)
-            if shenfen == '学生':
+            if usertype == 'student':
                 return render_template("student_cap.html", name=name, xuehao=username)
         else:
+            # 没整明白
             flash("用户名密码错误，请重新输入！")
-            return redirect(url_for('index'))  # 密码错误重定向到登录页面
+            # 密码错误重定向到登录页面
+            return redirect(url_for('index'))  
 
     else:
+        # 重定向到登录页面
         return redirect(url_for('index'))
 
+#新增教师
 @app.route('/add_teacher', methods=['POST', 'GET'])
 def add_teacher():
     return render_template("add_teacher_cap.html")
+
+#通选
 @app.route('/tongxuan', methods=["GET"])
 def into_tongxuan():
-    #通选限选
     xuehao = request.args.get('xuehao')
-    page = int(request.args.get('page', 1))  # 默认值为1
-    alert = request.args.get('result', '')  # 默认值为空
+    page = int(request.args.get('page', 1))  
+    alert = request.args.get('result', '')  
     if page <= 0:
         page = 1
-    # 设置每一页展示5行
     hang = 5
     # 查询未选的必修课，获取页数
     result, _ = GetSql2("select count(*) from t_course_info,t_teaching where t_course_info.course_num = t_teaching.course_num and course_type = '通选限选' and t_teaching.course_num not in (select course_num from t_student_Course where student_num = '" + xuehao + "')")
@@ -122,7 +121,7 @@ def into_tongxuan():
     return render_template("tongxuan_cap.html", xuehao=xuehao, results=result, page_num=page_num, current_page=current_page,
                            result_num=result_num, result=alert)
 
-
+#excel导入
 @app.route('/excel', methods=['GET'])
 def excel():
     #进入Excel文件成绩批量录入界面
@@ -133,13 +132,12 @@ def excel():
     result, _ = GetSql2("select t_teaching.course_num, course_id, course_name, credit, course_type from t_teaching, t_course_info where t_teaching.course_num = t_course_info.course_num and teacher_num = '"+str(bianhao)+"'")
     return render_template("excel_cap.html", bianhao=bianhao, results=result, result=r)
 
+#查询开设课程
 @app.route('/selectCourse', methods=['POST'])
 def selectCourse():
-    #查询开设课程
     r = request.args.get('result', '')
     kehao = request.form.get('kehao')
     kexuhao = request.form.get('kexuhao')
-    #查询该课程的开课信息
     # 查询教师授课表
     result, _ = GetSql2("select * from t_teaching where course_num = '"+str(kehao)+"' and course_id = '"+str(kexuhao)+"'")
     # 查询开课班级表
@@ -149,36 +147,35 @@ def selectCourse():
         result[i] = (result[i], result1)
     return render_template("man_cou_cap.html", results=result, result=r)
 
+#个人中心
 @app.route('/self_info', methods=["GET"])
 def self_info():
-    #个人中心
-
-    shenfen = request.args.get('shenfen')
-    if shenfen == '学生':
+    usertype = request.args.get('usertype')
+    #学生
+    if usertype== 'student':
         xuehao = request.args.get('xuehao')
         result, _ = GetSql2("select student_num,student_name,sex,birth_date,t_specialty_info.sp_name,t_class_info.calss_name from t_student_info,t_specialty_info,t_class_info where t_student_info.class_num = t_class_info.class_num and t_student_info.sp_num = t_specialty_info.sp_num and student_num = '" + xuehao + "'")
         return render_template("student_self_cap.html", student = result[0])
-    if shenfen == '教师':
+    #教师
+    if usertype == 'teacher':
         bianhao = request.args.get('bianhao')
         result, _ = GetSql2("select t_teacher_info.teacher_num, teacher_name, sex, dep_name, title from t_teacher_info, t_department where t_teacher_info.dep_num = t_department.dep_num and t_teacher_info.teacher_num = '" + bianhao + "'")
         return render_template("teacher_self_cap.html", teacher=result[0])
-    print(shenfen)
-    if shenfen == None:
+    if usertype == None:
         bianhao = request.args.get('bianhao')
         result, _ = GetSql2("select sys_num, pwd  from t_sys_info where t_sys_info.sys_num = '" + bianhao + "'")
         return render_template("manager_self_cap.html", student=result[0])
 
+#查询教师授课表
 @app.route('/teacherlist', methods=['POST', 'GET'])
 def teacherlist():
     r = request.args.get('result', '')
-    #查询教师授课表
     result,_ = GetSql2("select * from t_teacher_info")
-    print(result)
-
     return render_template("man_teacher_cap.html", results=result, result=r)
+
+#学生查询成绩页面
 @app.route('/stu_mark', methods=['POST', 'GET'])
 def into_stu_mark():
-    #学生查询成绩页面
     #根据学号查询出成绩单
     xuehao = request.args.get('xuehao')
     result = request.args.get('result', '')
@@ -186,26 +183,23 @@ def into_stu_mark():
     kaoshi = int(request.args.get('kaoshi', 0))
     sql = "select t_student_Course.course_num, course_id, course_name, credit, course_type, achievement, achievement_exam from t_student_Course, t_course_info where t_student_Course.course_num = t_course_info.course_num and student_num = '"+xuehao+"' and achievement != 0 and achievement_exam!=0"
     r, _ = GetSql2(sql)
-
     return render_template("stu_cha_mark_cap.html", xuehao=xuehao, results=r, result=result, pingshi=pingshi, kaoshi=kaoshi)
 
+#批量输入成绩
 @app.route('/piliang', methods=['GET'])
 def piliang():
-    #批量输入成绩
     kehao = request.args.get('kehao')
     kexuhao = request.args.get('kexuhao')
     bianhao = request.args.get('bianhao')
     r = request.args.get('result', '')  # 默认值设为空
     #查询这门课的所有学生
     result, _ = GetSql2("select student_num, achievement, achievement_exam from t_student_Course where course_num = '"+str(kehao)+"' and course_id = '"+str(kexuhao)+"'")
-
     return render_template("piliang_cap.html", results=result, result=r, kehao=kehao, kexuhao=kexuhao, bianhao=bianhao)
 
+#删除开设课程
 @app.route('/deleteCource', methods=['GET', 'POST'])
 def deleteCource():
-    #删除开设课程
     if request.method == 'GET':
-        #是单独删除
         kehao = request.args.get('kehao')
         kexuhao = request.args.get('kexuhao')
         tea = request.args.get('tea')
@@ -219,21 +213,18 @@ def deleteCource():
             result = '删除失败'
         return redirect(url_for('course', result=result))
     else:
-        #是批量删除
+        #批量删除
         couids = request.form.getlist('couid')
-        # couid是列表的形式，['12301+1+45601', '12302+1+45602']，用字典的方式获取数据
         ke = []
         flag = 0
         for couid in couids:
-            #第一个加号的位置
             index = couid.find('+')
-            #第二个加号的位置
             index2 = couid.find('+', index+1)
             dic = {}
             dic['kehao'] = couid[:index]
             dic['kexuhao'] = couid[index + 1:index2]
             dic['tea'] = couid[index2+1:]
-            #将数据库中的信息删除
+            #删除数据
             result1 = DelDataByIdOne("delete from t_teaching where course_num = '"+str(dic['kehao'])+"' and course_id = '"+str(dic['kexuhao'])+"' and teacher_num = '"+str(dic['tea'])+"'")
             result2 = DelDataByIdOne("delete from t_open_class where course_num = '"+str(dic['kehao'])+"' and course_id = '"+str(dic['kexuhao'])+"'")
             if result1 == '删除成功' and result2 == '删除成功':
@@ -246,9 +237,9 @@ def deleteCource():
             result = '删除成功'
         return redirect(url_for('course', result=result))
 
+#查询选修该课程的学生名单
 @app.route('/tea_stu', methods=['GET'])
 def tea_stu():
-    #查询选修该课程的学生名单
     bianhao = request.args.get('bianhao')
     kehao = request.args.get('kehao')
     kexuhao = request.args.get('kexuhao')
@@ -353,9 +344,8 @@ def add_open():
     kehao, _ = GetSql2("select course_num from t_course_info where course_num not in (select course_num from t_teaching)")
     #查询所有的教师编号传过去
     tea, _ = GetSql2("select teacher_num from t_teacher_info")
-
     #查询所有的班级
-    ban, _ = GetSql2("select class_num from class")
+    ban, _ = GetSql2("select class_num from t_class_info")
 
     return render_template("add_open_cap.html", kehao=kehao, tea=tea, ban=ban)
 
@@ -399,8 +389,6 @@ def kechenglist():
     r = request.args.get('result', '')
     #查询教师授课表
     result,_ = GetSql2("select * from t_course_info")
-    print(result)
-
     return render_template("man_kecheng_cap.html", results=result, result=r)
 
 @app.route('/luru_mark', methods=['POST'])
@@ -415,23 +403,22 @@ def luru_mark():
     page = request.form.get('page')
     sql = "update t_student_Course set achievement = "+pingshi+", achievement_exam = "+kaoshi+" where student_num = '"+xuehao+"' and course_num = '"+kehao+"' and course_id = '"+kexuhao+"'"
     result = UpdateDataOne(sql)
-
     return redirect(url_for('tea_cha', bianhao=bianhao, result=result, page=page, kehao=kehao, kexuhao=kexuhao))
 
+#点击修改密码，将信息传递到修改密码界面
 @app.route('/mima', methods=["GET"])
 def password():
-    #点击修改密码，将信息传递到修改密码界面
-    shenfen = request.args.get('shenfen')
-    if shenfen == '学生':
+    usertype = request.args.get('usertype')
+    if usertype == 'student':
         xuehao = request.args.get('xuehao')
-        return render_template("mima_cap.html", shenfen=shenfen, hao=xuehao)
-    if shenfen == '教师':
+        return render_template("mima_cap.html", shenfen=usertype, hao=xuehao)
+    if usertype == 'teacher':
         bianhao = request.args.get('bianhao')
-        return render_template("mima_cap.html", shenfen=shenfen, hao=bianhao)
+        return render_template("mima_cap.html", shenfen=usertype, hao=bianhao)
 
+#进入Excel文件成绩批量录入
 @app.route('/excel_mark', methods=['POST', 'GET'])
 def excel_mark():
-    #进入Excel文件成绩批量录入
     if request.method == 'POST':
         kehao = request.form.get('kehao')
         kexuhao = request.form.get('kexuhao')
@@ -462,7 +449,6 @@ def excel_mark():
             else:
                 flag = 1
                 result = ' ' + result + '学号' + a[0]
-
         result = result + '的同学成绩录入失败，请检查！！'
         if flag == 0:
             return redirect(url_for('excel', bianhao=bianhao, result='成绩单导入成功，请点击成绩中心进行查看！'))
@@ -472,9 +458,9 @@ def excel_mark():
         bianhao = request.args.get('bianhao')
         return redirect(url_for('excel', bianhao=bianhao))
 
+#专业限选
 @app.route('/zhuanye', methods=["GET"])
 def into_zhuanye():
-    #专业限选
     xuehao = request.args.get('xuehao')
     page = int(request.args.get('page', 1))  # 默认值为1
     alert = request.args.get('result', '')  # 默认值为空
@@ -501,9 +487,9 @@ def into_zhuanye():
     return render_template("zhuanye_cap.html", xuehao=xuehao, results=result, page_num=page_num, current_page=current_page,
                            result_num=result_num, result=alert)
 
+#必修
 @app.route('/bixiu', methods=["GET"])
 def into_bixiu():
-    #必修
     xuehao = request.args.get('xuehao')
     page = int(request.args.get('page', 1)) #默认值为1
     alert = request.args.get('result', '') #默认值为空
@@ -529,9 +515,9 @@ def into_bixiu():
     #获取剩余人数
     return render_template("bixiu_cap.html", xuehao=xuehao, results=result, page_num=page_num, current_page=current_page, result_num = result_num, result = alert)
 
+#将所有的教师授课信息显示出来
 @app.route('/course', methods=['POST', 'GET'])
 def course():
-    #将所有的教师授课信息显示出来
     r = request.args.get('result', '')
     #查询教师授课表
     result,_ = GetSql2("select * from t_teaching")
@@ -539,11 +525,11 @@ def course():
     for i in range(len(result)):
         result1, _ = GetSql2("select calss_name from t_open_class, t_class_info where t_open_class.class_num = t_class_info.class_num and course_num = '"+str(result[i][0])+"' and course_id = '"+str(result[i][1])+"'")
         result[i] = (result[i], result1)
-
     return render_template("man_cou_cap.html", results=result, result=r)
+
+ #添加开设课程
 @app.route('/addCourse', methods=['POST', 'GET'])
 def addCourse():
-    #添加开设课程
     if request.method == 'POST':
         #获取信息
         kehao = request.form.get('kehao')
@@ -572,14 +558,13 @@ def addCourse():
         for o in opens:
             data1 = dict(course_num=kehao, course_id=kexuhao, class_num=o)
             InsertDataOne(data1, "t_open_class")
-
         return redirect(url_for('course', result=result))
     else:
         return redirect(url_for('add_open'))
 
+# 单个修改学生成绩
 @app.route('/xiugai_mark', methods=['POST'])
 def xiugai_mark():
-    # 单个修改学生成绩
     xuehao = request.form.get('xuehao')
     kehao = request.form.get('kehao')
     kexuhao = request.form.get('kexuhao')
@@ -589,12 +574,11 @@ def xiugai_mark():
     page = request.form.get('page')
     sql = "update t_student_Course set achievement = " + pingshi + ", achievement_exam = " + kaoshi + " where student_num = '" + xuehao + "' and course_num = '" + kehao + "' and course_id = '" + kexuhao + "'"
     result = UpdateDataOne(sql)
-
     return redirect(url_for('tea_cha', bianhao=bianhao, result=result, page=page, kehao=kehao, kexuhao=kexuhao))
 
+#教师点击查询
 @app.route('/tea_cha', methods=['GET'])
 def tea_cha():
-    #教师点击查询
     bianhao = request.args.get('bianhao')
     kehao = request.args.get('kehao')
     kexuhao = request.args.get('kexuhao')
@@ -633,9 +617,9 @@ def tea_cha():
     return render_template("stu_mark_cap.html", bianhao=bianhao, results=result, page_num=page_num, current_page=current_page,
                            result_num=result_num, kehao=kehao, kexuhao=kexuhao, pingshi=pingshi, kaoshi=kaoshi, result=r, zong=zong)
 
+ #进入退课页面
 @app.route('/tuike', methods=["GET"])
 def into_tuike():
-    #进入退课页面
     xuehao = request.args.get('xuehao')
     page = int(request.args.get('page', 1))  # 默认值为1
     alert = request.args.get('result', '')  # 默认值为空
@@ -661,9 +645,9 @@ def into_tuike():
     return render_template("tuike_cap.html", xuehao=xuehao, results=result, page_num=page_num, current_page=current_page,
                            result_num=result_num, result=alert)
 
+#修改开设课程页面
 @app.route('/updateCourcePage', methods=['GET'])
 def updateCourcePage():
-    #修改开设课程页面
     #将数据查询出来，传递给修改界面
     kehao = request.args.get('kehao')
     kexuhao = request.args.get('kexuhao')
@@ -681,12 +665,12 @@ def updateCourcePage():
     #将所有任课教师查询出来
     teachers, _ = GetSql2("select teacher_num from t_teacher_info")
     #将所有的班级查询出来
-    bans,_ = GetSql2("select class_num from class")
+    bans,_ = GetSql2("select class_num from t_class_info")
     return render_template("updateCourcePage_cap.html", results=result[0], teachers=teachers, ban=bans)
 
+#教师成绩查询页面
 @app.route('/tea_mark', methods=['GET'])
 def tea_mark():
-    #教师成绩查询页面
     #获取编号
     bianhao = request.args.get('bianhao')
     #查询教师所教授的课程
@@ -694,9 +678,9 @@ def tea_mark():
 
     return render_template("tea_cha_mark_cap.html", bianhao=bianhao, results=result)
 
+#教师开课信息界面
 @app.route('/t_teaching', methods=['GET'])
 def t_teaching():
-    #教师开课信息界面
     #获取编号
     bianhao = request.args.get('bianhao')
     #查询教师所教授的课程
@@ -708,17 +692,19 @@ def t_teaching():
 
     return render_template("tea_cou_cap.html", bianhao=bianhao, results=result)
 
+
 @app.route('/add_kecheng', methods=['POST', 'GET'])
 def add_kecheng():
     return render_template("add_kecheng_cap.html")
+
 
 @app.route('/add_student', methods=['POST', 'GET'])
 def add_student():
     return render_template("add_student_cap.html")
 
+#退课
 @app.route('/tui_cou', methods=['POST', 'GET'])
 def tui_cou():
-    #退课
     if request.method == 'POST':
         #证明是form的整体提交，是批量退课
         #获取学号和批量课号和课序号
@@ -759,38 +745,35 @@ def tui_cou():
 
 @app.route("/add_student_cap2")
 def add_student_cap2():
-    x = request.args.get('学号')
-    result,_ = GetSql2("select * from student where 学号 = "+str(x))
+    x = request.args.get('student_num')
+    result,_ = GetSql2("select * from t_student_info where student_num = "+str(x))
     return render_template("add_student_cap2.html",result=result)
 
+# 根据id修改数据
 @app.route("/updatedata",methods=['POST'])
 def updatedata():
-    # 根据id修改数据
     data = request.get_data().decode('utf-8')
     data = json.loads(data)
     useSqliteUpdate(data)
     return json.dumps({"msg":"保存成功"})
 
 
+# 根据id修改数据
 @app.route("/updatedata1",methods=['POST'])
 def updatedata1():
-    # 根据id修改数据
     data = request.get_data().decode('utf-8')
     print(data)
     data = request.form.to_dict()
-    # data = json.loads(data)
-    useSqliteUpdate(data,"学号")
+    useSqliteUpdate(data,"student_num")
     r = request.args.get('result', '')
     #查询学生信息表
     result,_ = GetSql2("select * from student")
-    print(result)
-
     return render_template("man_student_cap.html", results=result, result=r)
 
 
+# 根据id删除数据
 @app.route("/deldata",methods=['GET'])
 def deldata():
-    # 根据id删除数据
     table = request.args.get('table','erro')
     database = request.args.get('database','erro')
     apath = table
@@ -800,23 +783,21 @@ def deldata():
 @app.route("/deldata1",methods=['GET','POST'])
 def deldata1():
     if request.method == 'POST':
-        #是批量删除
         couids = request.form.getlist('couid')
-        # couid是列表的形式，['12301+1+45601', '12302+1+45602']，用字典的方式获取数据
         ke = []
         flag = 0
         for couid in couids:
             #将数据库中的信息删除
-            result1 = DelDataByIdOne("delete from student where 学号 = '"+couid+"'")
+            result1 = DelDataByIdOne("delete from t_student_info where student_num = '"+couid+"'")
             print(result1)
-        result,_ = GetSql2("select * from student")
+        result,_ = GetSql2("select * from t_student_info")
         return render_template("man_student_cap.html", results=result)
     # 根据id删除数据
     table = request.args.get('table','erro')
     database = request.args.get('database','erro')
     apath = table
-    useSqliteDelete({"database":database,'table':table,"id":request.args.get('id','erro'),'学号':request.args.get('学号','erro')},'学号')
-    result,_ = GetSql2("select * from student")
+    useSqliteDelete({"database":database,'table':table,"id":request.args.get('id','erro'),'student_num':request.args.get('student_num','erro')},'student_num')
+    result,_ = GetSql2("select * from t_student_info")
     print(result)
     return render_template("man_student_cap.html", results=result)
 
@@ -827,10 +808,7 @@ def cha1():
     data = request.get_data().decode('utf-8')
     data = request.form.to_dict()
     print(data)
-    result,_ = GetSql2("select * from student where 姓名 = '"+str(data["姓名"])+"'"  )
-    # print(result)
-    # print(result)
-
+    result,_ = GetSql2("select * from t_student_info where student_name = '"+str(data["student_name"])+"'"  )
     return render_template("man_student_cap.html", results=result)
 
 @app.route("/savedata",methods=['POST'])
@@ -841,20 +819,19 @@ def savedata():
     # data = json.loads(data)
     print(data)
     useSqliteInsert(data)
-    # InsertDataOne(data, data["table"])
 
     return json.dumps({"msg":"保存成功"})
+
 @app.route("/savedata1",methods=['POST'])
 def savedata1():
     # 上传数据
     data = request.get_data().decode('utf-8')
     data = request.form.to_dict()
-    # data = json.loads(data)
     print(data)
     useSqliteInsert(data)
     r = request.args.get('result', '')
     #查询学生信息表
-    result,_ = GetSql2("select * from student")
+    result,_ = GetSql2("select * from t_student_info")
     print(result)
 
     return render_template("man_student_cap.html", results=result, result=r)

@@ -26,11 +26,11 @@
                 </label>
                 <div style="font-family:'Times New Roman';text-align: center;margin-top: 15px">
                     <input style="font-family:'Times New Roman';width: 30px;display: inline-block;" type="radio"
-                        name="shenfen" value="管理员">管理员
+                        name="usertype" value="admin">管理员
                     <input style="font-family:'Times New Roman';width: 30px;display: inline-block;" type="radio"
-                        name="shenfen" value="教师">教师
+                        name="usertype" value="teacher">教师
                     <input style="font-family:'Times New Roman';width: 30px;display: inline-block;" type="radio"
-                        name="shenfen" value="学生">学生
+                        name="usertype" value="student">学生
                 </div>
                 <button type="submit" class="submit">登 录</button>
             </form>
@@ -72,7 +72,7 @@
                 alert("请输入正确的密码,仅可用英文、数字、特殊字符@#*$!%！");
                 return false;
             }
-            var usertype = document.forms["input"]["shenfen"];
+            var usertype = document.forms["input"]["usertype"];
             if (usertype[0].checked == false && usertype[1].checked == false && usertype[2].checked == false) {
                 alert("请选择用户身份！");
                 return false;
