@@ -64,38 +64,54 @@
                 <input type="text" name="性别">
             </div>
 
-            <div class="mydiv">
-                <label>出生日期：</label>
-                <input type="text" name="出生日期">
-            </div>
-            <div class="mydiv">
-                <label>专业：</label>
-                <input type="text" name="专业">
-            </div>
-            <div class="mydiv">
-                <label>班级号：</label>
-                <input type="text" name="班级号">
-            </div>
-            <div class="mydiv">
-                <label>密码：</label>
-                <input type="text" name="密码">
-            </div>
-
-            <div class="mydiv" style="display: none;">
-                <label>密码：</label>
-                <input type="text" value="database" name="database">
-            </div>
-
-            <div class="mydiv" style="display: none;">
-                <label>密码：</label>
-                <input type="text" value="student" name="table">
-            </div>
-
-            <div class="mydiv">
-                <input type="submit" class="rtbtn" value="保存">
-                <input type="button" class="rtbtn" value="返回" onclick="javascript:history.back();">
-            </div>
-        </form>
+<div class="body" style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
+   <form name="input" action="/savedata1" method="post" onsubmit="return checkInfo();" enctype="multipart/form-data">
+    <div class="mydiv">
+        <label for="didian">学号:</label>
+        <input type="text" name="学号">
+    </div>
+    <div class="mydiv">
+        <label >姓名</label>
+        <input type="text"  name="姓名">
+    </div>
+    <div class="mydiv">
+        <label >性别：</label>
+        <select name="性别">
+            <option value="男">男</option>
+            <option value="女">女</option>
+        </select>
+    </div>
+    
+    <div class="mydiv">
+        <label >出生日期：</label>
+        <input type="date"  name="出生日期">
+    </div>
+    <div class="mydiv">
+        <label >专业：</label>
+        <input type="text"  name="专业">
+    </div>
+    <div class="mydiv">
+        <label >班级号：</label>
+        <input type="text"  name="班级号">
+    </div>
+     <div class="mydiv">
+        <label >密码：</label>
+        <input type="text"  name="密码">
+    </div>
+    
+     <div class="mydiv" style="display: none;">
+        <label >密码：</label>
+        <input type="text"  value="database" name="database">
+    </div>
+    
+     <div class="mydiv" style="display: none;">
+        <label >密码：</label>
+        <input type="text"  value="student" name="table">
+    </div>
+    
+    <div class="mydiv">
+        <input type="submit" class="rtbtn" value="保存">
+        <input type="button" class="rtbtn"  value="返回" onclick="javascript:history.back();">
     </div>
     <script type="text/javascript">
         function checkInfo() {

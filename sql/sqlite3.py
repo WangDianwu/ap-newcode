@@ -48,13 +48,13 @@ def dict_factory(cursor, row):
         d[col[0]] = row[idx]
     return d
 # 删
-def useSqliteDelete(data):
+def useSqliteDelete(data,zi):
     conn = sqlite3.connect(r'sql/'+data['database']+'.db')
     conn.row_factory = dict_factory 
     cursor = conn.cursor()
     print('===========================')
     # print('DELETE  from ' + data["table"] + ' WHERE id=\'' + data["id"]+'\'')
-    cursor.execute('DELETE  from ' + data["table"] + ' WHERE id= ?',[data["id"]])
+    cursor.execute('DELETE  from ' + data["table"] + ' WHERE '+zi+'= ?',[data[zi]])
     cursor.close()
     conn.commit()
     conn.close()
@@ -100,7 +100,7 @@ def useSqliteSelectByPage(dic):
     return values
 
 # 改
-def useSqliteUpdate(dic):
+def useSqliteUpdate(dic,zi):
     conn = sqlite3.connect(r'sql/'+dic["database"]+'.db')
     cursor = conn.cursor()
     string3 = ''
@@ -124,7 +124,7 @@ def useSqliteUpdate(dic):
             string3 = string3+' , '+  x +' = ' '\''+ str(dic[x])+'\''
         pass
     # cursor.execute('create table if not exists '+dic["key"]+' (id integer NOT NULL PRIMARY KEY AUTOINCREMENT , '+ string +')')
-    astr = 'UPDATE '+dic["table"]+' SET '+string3+' WHERE id = \''+str(dic["id"])+'\''
+    astr = 'UPDATE '+dic["table"]+' SET '+string3+' WHERE '+zi+' = \''+str(dic[zi])+'\''
     print(astr)
     cursor.execute(astr)
     cursor.close()
