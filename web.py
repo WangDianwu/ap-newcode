@@ -61,7 +61,6 @@ def studentlist():
     return render_template("man_student_cap.html", results=result, result=r)
 @app.route('/result', methods=['POST', 'GET'])   #登录信息处理界面，处理由'/'传送过来的表单信息
 def result():
-    #如果使用post方法传送过来的数据才验证
     if request.method == 'POST':
         #获取表单数据
         username = request.form.get('username')
@@ -71,14 +70,13 @@ def result():
         name = ''
         if shenfen == '学生':
             result, _ = GetSql2("select student_name from t_student_info where student_num = '"+username+"' and pwd = '"+password+"'")
-            name = result[0][0]
         if shenfen == '教师':
             result, _ = GetSql2("select teacher_name from t_teacher_info where teacher_num = '"+username+"' and pwd = '"+password+"'")
-            name = result[0][0]
         if shenfen == '管理员':
             result, _ = GetSql2("select * from t_sys_info where sys_num = '"+username+"' and pwd = '"+password+"'")
         if result: #登录成功，页面跳转到相应的功能页面
             # return '登录成功'
+            name = result[0][0]
             if shenfen == '管理员':
                 return render_template("manager_cap.html", name=username)
             if shenfen == '教师':
@@ -86,7 +84,7 @@ def result():
             if shenfen == '学生':
                 return render_template("student_cap.html", name=name, xuehao=username)
         else:
-            flash("您输入的用户名和密码有误，请重新输入！")
+            flash("用户名密码错误，请重新输入！")
             return redirect(url_for('index'))  # 密码错误重定向到登录页面
 
     else:
