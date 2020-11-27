@@ -765,6 +765,12 @@ def add_student_cap2():
     result,_ = GetSql2("select * from student where 学号 = "+str(x))
     return render_template("add_student_cap2.html",result=result)
 
+@app.route("/add_teacher_cap2")
+def add_teacher_cap2():
+    x = request.args.get('teacher_num')
+    result,_ = GetSql2("select * from t_teacher_info where teacher_num = "+str(x))
+    return render_template("add_teacher_cap2.html",result=result)
+
 @app.route("/updatedata",methods=['POST'])
 def updatedata():
     # 根据id修改数据
@@ -788,6 +794,21 @@ def updatedata1():
     print(result)
 
     return render_template("man_student_cap.html", results=result, result=r)
+
+@app.route("/updatedata2",methods=['POST'])
+def updatedata2():
+    # 根据id修改数据
+    data = request.get_data().decode('utf-8')
+    print(data)
+    data = request.form.to_dict()
+    # data = json.loads(data)
+    useSqliteUpdate(data,"teacher_num")
+    r = request.args.get('result', '')
+    #查询教师授课表
+    result,_ = GetSql2("select * from t_teacher_info")
+    print(result)
+
+    return render_template("man_teacher_cap.html", results=result, result=r)
 
 
 @app.route("/deldata",methods=['GET'])
@@ -821,6 +842,29 @@ def deldata1():
     result,_ = GetSql2("select * from student")
     print(result)
     return render_template("man_student_cap.html", results=result)
+@app.route("/deldata2",methods=['GET','POST'])
+def deldata2():
+    r = ''
+    if request.method == 'POST':
+        #是批量删除
+        couids = request.form.getlist('couid')
+        # couid是列表的形式，['12301+1+45601', '12302+1+45602']，用字典的方式获取数据
+        ke = []
+        flag = 0
+        for couid in couids:
+            #将数据库中的信息删除
+            result1 = DelDataByIdOne("delete from t_teacher_info where teacher_num = '"+couid+"'")
+            print(result1)
+        result,_ = GetSql2("select * from t_teacher_info")
+        return render_template("man_teacher_cap.html", results=result, result=r)
+    # 根据id删除数据
+    table = request.args.get('table','erro')
+    database = request.args.get('database','erro')
+    apath = table
+    useSqliteDelete({"database":database,'table':table,"id":request.args.get('id','erro'),'teacher_num':request.args.get('teacher_num','erro')},'teacher_num')
+    result,_ = GetSql2("select * from t_teacher_info")
+    print(result)
+    return render_template("man_teacher_cap.html", results=result, result=r)
 
 
 @app.route("/cha1",methods=['POST'])
@@ -834,6 +878,18 @@ def cha1():
     # print(result)
 
     return render_template("man_student_cap.html", results=result)
+
+@app.route("/cha2",methods=['POST'])
+def cha2():
+    # 根据id删除数据
+    data = request.get_data().decode('utf-8')
+    data = request.form.to_dict()
+    print(data)
+    result,_ = GetSql2("select * from t_teacher_info where teacher_name = '"+str(data["teacher_name"])+"'"  )
+    # print(result)
+    # print(result)
+
+    return render_template("man_teacher_cap.html", results=result)
 
 @app.route("/savedata",methods=['POST'])
 def savedata():
@@ -860,6 +916,22 @@ def savedata1():
     print(result)
 
     return render_template("man_student_cap.html", results=result, result=r)
+
+@app.route("/savedata2",methods=['POST'])
+def savedata2():
+    # 上传数据
+    data = request.get_data().decode('utf-8')
+    data = request.form.to_dict()
+    # data = json.loads(data)
+    print(data)
+    useSqliteInsert(data)
+    r = request.args.get('result', '')
+    #查询教师授课表
+    result,_ = GetSql2("select * from t_teacher_info")
+    print(result)
+
+    return render_template("man_teacher_cap.html", results=result, result=r)
+
 
 @app.route("/getdata",methods=['GET'])
 def getdata():

@@ -54,7 +54,9 @@ def useSqliteDelete(data,zi):
     cursor = conn.cursor()
     print('===========================')
     # print('DELETE  from ' + data["table"] + ' WHERE id=\'' + data["id"]+'\'')
+    print('DELETE  from ' + data["table"] + ' WHERE '+zi+'= ?',[data[zi]])
     cursor.execute('DELETE  from ' + data["table"] + ' WHERE '+zi+'= ?',[data[zi]])
+
     cursor.close()
     conn.commit()
     conn.close()

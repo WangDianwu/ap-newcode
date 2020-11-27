@@ -36,7 +36,7 @@
 <body class="mybody">
  <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
     <div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
-    <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">添加老师页面</span>
+    <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">修改老师页面</span>
 </div>
 
 
@@ -44,35 +44,42 @@
    <form name="input" action="/savedata2" method="post" onsubmit="return checkInfo();" enctype="multipart/form-data">
     <div class="mydiv">
         <label for="didian">编号:</label>
-        <input type="text" id="didian" name="teacher_num">
+        <input type="text" id="didian" name="teacher_num"  value="{{result[0][0]}}">
     </div>
     <div class="mydiv">
         <label for="zhou">姓名：</label>
-        <input type="text" id="zhou" name="teacher_name">
+        <input type="text" id="zhou" name="teacher_name"   value="{{result[0][1]}}">
     </div>
     <div class="mydiv">
         <label for="zhou">性别：</label>
-        <select name="sex">
+        <select id="s2" name="sex" >
             <option value="男">男</option>
             <option value="女">女</option>
-        </select>    </div>
+        </select>   
+        <script type="text/javascript">
+            $('#s2').val('{{result[0][2]}}')
+        </script>
+         </div>
     
     <div class="mydiv">
         <label for="zhou">所属系所：</label>
-        <input type="text" id="zhou" name="dep_num">
+        <input type="text" id="zhou" name="dep_num"  value="{{result[0][3]}}">
     </div>
     <div class="mydiv">
         <label for="zhou">职称：</label>
-                <select name="title">
+                <select name="title" id="s1">
             <option value="助教">助教</option>
             <option value="讲师">讲师</option>
             <option value="副教授">副教授/option>
             <option value="教授">教授</option>
         </select>
+        <script type="text/javascript">
+            $('#s1').val('{{result[0][4]}}')
+        </script>
     </div>
     <div class="mydiv">
         <label for="zhou">密码：</label>
-        <input type="text" id="zhou" name="pwd">
+        <input type="text" id="zhou" name="pwd"  value="{{result[0][5]}}">
     </div>
          <div class="mydiv" style="display: none;">
         <label >密码：</label>

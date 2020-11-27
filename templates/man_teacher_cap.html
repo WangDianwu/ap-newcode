@@ -21,10 +21,10 @@
 
         <div class="head">
             <div style="font-family:'Times New Roman';float:left;">
-                <form class="form-inline" action="{{url_for('selectCourse')}}" method="post">
+                <form class="form-inline" action="{{url_for('cha2')}}" method="post">
                     <div class="form-group">
                         <label for="kehao">姓名</label>
-                        <input type="text" name="姓名">
+                        <input type="text" name="teacher_name">
                     </div>
                     <button type="submit" class="button_cha rtbtn">查询</button>
                 </form>
@@ -34,7 +34,7 @@
                 <a class="button rtbtn" href="javascript:void(0);" id="delselected">删除选中项</a>
             </div>
         </div>
-        <form id="form" action="{{url_for('deleteCource')}}" method="post">
+        <form id="form" action="{{url_for('deldata2')}}" method="post">
             <table border="1" class="table">
                 <tr class="tr">
                     <th class="myth"><input type="checkbox" id="firstcb"></th>
@@ -48,7 +48,7 @@
                 </tr>
                 {% for r in results %}
                 <tr>
-                    <td class="mytd"><input type="checkbox" name="couid" value="{{r[0]}}+{{r[1]}}+{{r[2]}}"></td>
+                    <td class="mytd"><input type="checkbox" name="couid" value="{{r[0]}}"></td>
                     <td class="mytd">{{r[0]}}</td>
                     <td class="mytd">{{r[1]}}</td>
                     <td class="mytd">{{r[2]}}</td>
@@ -56,8 +56,8 @@
                     <td class="mytd">{{r[4]}}</td>
                     <td class="mytd">{{r[5]}}</td>
               
-                    <td class="mytd"><a href="{{url_for('updateCourcePage')}}?kehao={{r[0]}}&kexuhao={{r[1]}}&tea={{r[2]}}" class="buttons rtbtn2">修改</a>&nbsp;
-                        <a class="buttons rtbtn2" href="{{url_for('deleteCource')}}?kehao={{r[0]}}&kexuhao={{r[1]}}&tea={{r[2]}}">删除</a></td>
+                    <td class="mytd"><a href="/add_teacher_cap2?teacher_num={{r[0]}}" class="buttons rtbtn2">修改</a>&nbsp;
+                        <a class="buttons rtbtn2" href="/deldata2?teacher_num={{r[0]}}&table=t_teacher_info&database=database">删除</a></td>
                     </tr>
                     {% endfor %}
                 </table>
