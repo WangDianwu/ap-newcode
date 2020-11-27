@@ -296,9 +296,9 @@ def stu_cha_mark():
         kaoshi = r[0][4]
         return redirect(url_for('into_stu_mark', xuehao=xuehao, pingshi=pingshi, kaoshi=kaoshi))
 
-@app.route('/feng')
-def feng():
-   return render_template('fengmian_cap.html')
+@app.route('/home')
+def home():
+   return render_template('home_cap.html')
 
 @app.route('/xuanke', methods=['POST', 'GET'])
 def sel_cou():

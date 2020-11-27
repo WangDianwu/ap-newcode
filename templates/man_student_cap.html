@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
     <title>学生选课和成绩管理系统</title>
     <link rel="stylesheet" type="text/css" href="static/css/manager.css">
     <style>
-        .kehao{
-            width:100px;
-            height:35px;
+        .kehao {
+            width: 100px;
+            height: 35px;
         }
     </style>
 </head>
+
 <body class="mybody">
     <div class="mydiv">
         <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
-            <div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
+            <div
+                style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);">
+            </div>
             <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">学生信息列表</span>
         </div>
-
-
         <div class="head">
             <div style="font-family:'Times New Roman';float:left;">
                 <form class="form-inline" action="{{url_for('selectCourse')}}" method="post">
@@ -55,50 +57,47 @@
                     <td class="mytd">{{r[3]}}</td>
                     <td class="mytd">{{r[4]}}</td>
                     <td class="mytd">{{r[5]}}</td>
-              
-                    <td class="mytd"><a href="{{url_for('updateCourcePage')}}?kehao={{r[0]}}&kexuhao={{r[1]}}&tea={{r[2]}}" class="buttons rtbtn2">修改</a>&nbsp;
-                        <a class="buttons rtbtn2" href="{{url_for('deleteCource')}}?kehao={{r[0]}}&kexuhao={{r[1]}}&tea={{r[2]}}">删除</a></td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </form>
-        </div>
-        <script type="text/javascript">
-            if('{{result}}' != null && '{{result}}' != ''){
-                alert('{{result}}')
-            }
-        //给批量删除按钮添加单击事件
-        window.onload = function(){
-            document.getElementById("delselected").onclick = function(){
-                if(confirm("您确定要删除选中开课信息吗？")){
-                    //判读是否有选中条目
+
+                    <td class="mytd"><a
+                            href="{{url_for('updateCourcePage')}}?kehao={{r[0]}}&kexuhao={{r[1]}}&tea={{r[2]}}"
+                            class="buttons rtbtn2">修改</a>&nbsp;
+                        <a class="buttons rtbtn2"
+                            href="{{url_for('deleteCource')}}?kehao={{r[0]}}&kexuhao={{r[1]}}&tea={{r[2]}}">删除</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
+    <script type="text/javascript">
+        if ('{{result}}' != null && '{{result}}' != '') {
+            alert('{{result}}')
+        }
+        window.onload = function () {
+            document.getElementById("delselected").onclick = function () {
+                if (confirm("您确定要删除选中开课信息吗？")) {
                     var flag = false;
                     var cbs = document.getElementsByName("couid");
-                    for(var i = 0; i < cbs.length; i++){
-                        if(cbs[i].checked){
+                    for (var i = 0; i < cbs.length; i++) {
+                        if (cbs[i].checked) {
                             flag = true;
                             break;
                         }
                     }
-                    if(flag){
-                        //表单提交
+                    if (flag) {
                         document.getElementById("form").submit();
-                    }
-                    else{
+                    } else {
                         alert("您未选中任何选项！");
                     }
                 }
             }
-            //获取第一个cb，实现点击后全部选中
-            document.getElementById("firstcb").onclick = function(){
-                //获取下面列表中所有的cb
+            document.getElementById("firstcb").onclick = function () {
                 var cbs = document.getElementsByName("couid");
-                //遍历选中
-                for(var i = 0; i < cbs.length; i++){
+                for (var i = 0; i < cbs.length; i++) {
                     cbs[i].checked = this.checked;
                 }
             }
         }
     </script>
 </body>
+
 </html>

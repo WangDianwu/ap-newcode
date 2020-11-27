@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
     <title>学生选课和成绩管理系统</title>
     <link rel="stylesheet" type="text/css" href="static/css/teacher.css">
     <style>
-        input[type=submit], .button{
-            width:100px;
+        input[type=submit],
+        .button {
+            width: 100px;
             background-color: RGBA(231, 77, 130, 1);
             color: white;
             margin: 8px 0;
@@ -18,50 +21,51 @@
         }
     </style>
 </head>
+
 <body class="mybody">
     <div class="mydiv">
-      <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
-        <div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
-        <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">学生名单</span>
-        <a style="font-family:'Times New Roman';float: right;margin-right: 15px;text-align: center;" class="button" href="{{url_for('tea_cha')}}?kehao={{kehao}}&kexuhao={{kexuhao}}&bianhao={{bianhao}}">返回</a>
-
+        <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
+            <div
+                style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);">
+            </div>
+            <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">学生名单</span>
+            <a style="font-family:'Times New Roman';float: right;margin-right: 15px;text-align: center;" class="button"
+                href="{{url_for('tea_cha')}}?kehao={{kehao}}&kexuhao={{kexuhao}}&bianhao={{bianhao}}">返回</a>
+        </div>
+        <div class="mydiv">
+            <table border="1" class="table">
+                <tr class="tr">
+                    <th class="myth">学号</th>
+                    <th class="myth">平时成绩</th>
+                    <th class="myth">考试成绩</th>
+                    <th class="myth">操作</th>
+                </tr>
+                {% for r in results %}
+                <tr class="tr">
+                    <form name="in" action="{{url_for('piliang')}}" method="post" onsubmit="return checkInfo();">
+                        <td class="mytd">{{r[0]}}</td>
+                        <input type="hidden" id="xuehao" value="{{r[0]}}" name="xuehao">
+                        <input type="hidden" id="kehao" value="{{kehao}}" name="kehao">
+                        <input type="hidden" id="kexuhao" value="{{kexuhao}}" name="kexuhao">
+                        <td class="mytd">
+                            <input type="text" id="pingshi" name="pingshi" value="{{r[1]}}"
+                                oninput="value=value.replace(/[^\d]/g,'')">
+                        </td>
+                        <td class="mytd">
+                            <input type="text" id="kaoshi" name="kaoshi" value="{{r[2]}}"
+                                oninput="value=value.replace(/[^\d]/g,'')">
+                        </td>
+                        <td class="mytd">
+                            <input type="submit" value="保存">
+                        </td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
-
-
-    <div class="mydiv">
-
-        <table border="1" class="table">
-            <tr class="tr">
-                <th class="myth">学号</th>
-                <th class="myth">平时成绩</th>
-                <th class="myth">考试成绩</th>
-                <th class="myth">操作</th>
-            </tr>
-            {% for r in results %}
-            <tr class="tr">
-                <form name="in" action="{{url_for('piliangDaoRu')}}" method="post" onsubmit="return checkInfo();">
-                    <td class="mytd">{{r[0]}}</td>
-                    <input type="hidden" id="xuehao" value="{{r[0]}}" name="xuehao">
-                    <input type="hidden" id="kehao" value="{{kehao}}" name="kehao">
-                    <input type="hidden" id="kexuhao" value="{{kexuhao}}" name="kexuhao">
-                    <td class="mytd">
-                        <input type="text" id="pingshi" name="pingshi" value="{{r[1]}}" oninput="value=value.replace(/[^\d]/g,'')">
-                    </td>
-                    <td class="mytd">
-                        <input type="text" id="kaoshi" name="kaoshi" value="{{r[2]}}" oninput="value=value.replace(/[^\d]/g,'')">
-                    </td>
-                    <td class="mytd">
-                        <input type="submit" value="保存">
-                    </td>
-                </form>
-            </tr>
-            {% endfor %}
-        </table>
-
-    </div>
-</div>
-<script type="text/javascript">
-    function checkInfo(){
+    <script type="text/javascript">
+        function checkInfo() {
             // var ping = document.forms["in"]["pingshi"].value;
             // var t2 = /^[0-9]*$/;
             // if(ping == null || ping == ""){
@@ -76,24 +80,23 @@
             //     alert("平时成绩仅限于0-100之间");
             //     return false;
             // }
-            var kao = document.forms["in"]["kaoshi"].value;
-            if(kao == null || kao == ""){
+            var achievement_exam = document.forms["in"]["kaoshi"].value;
+            if (achievement_exam == null || achievement_exam == "") {
                 alert("考试成绩不能为空！");
                 return false;
-            }
-            else if(!t2.test(kao)){
+            } else if (!t2.test(achievement_exam)) {
                 alert("考试成绩仅限于非负数！！");
                 return false;
-            }
-            else if(kao > 100){
+            } else if (achievement_exam > 100) {
                 alert("考试成绩仅限于0-100之间");
                 return false;
             }
             return true;
         }
-        if('{{result}}' != null && '{{result}}' != ""){
+        if ('{{result}}' != null && '{{result}}' != "") {
             alert('{{result}}')
         }
     </script>
 </body>
+
 </html>

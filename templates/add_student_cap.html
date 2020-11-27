@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
     <title>学生选课和成绩管理系统</title>
     <link rel="stylesheet" type="text/css" href="static/css/manager2.css">
     <style>
-        input[type=submit], input[type=button]{
-            width:100px;
+        input[type=submit],
+        input[type=button] {
+            width: 100px;
             background-color: RGBA(231, 77, 130, 1);
             color: white;
             padding: 14px 20px;
@@ -16,97 +18,105 @@
             cursor: pointer;
         }
 
-        label{
+        label {
             display: inline-block;
             width: 20%;
             float: left;
             line-height: 40px;
         }
-        select,input[typle=text]{
+
+        select,
+        input[typle=text] {
             width: 80%;
             float: left;
             height: 40px;
         }
-        form>div{
+
+        form>div {
             overflow: hidden;
             clear: both;
         }
     </style>
 </head>
+
 <body class="mybody">
- <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
-    <div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
-    <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">添加学生页面</span>
-</div>
+    <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
+        <div
+            style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);">
+        </div>
+        <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">添加学生页面</span>
+    </div>
 
+    <div class="body"
+        style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
+        <form name="input" action="/savedata" method="post" onsubmit="return checkInfo();"
+            enctype="multipart/form-data">
+            <div class="mydiv">
+                <label for="didian">学号:</label>
+                <input type="text" name="学号">
+            </div>
+            <div class="mydiv">
+                <label>姓名</label>
+                <input type="text" name="姓名">
+            </div>
+            <div class="mydiv">
+                <label>性别：</label>
+                <input type="text" name="性别">
+            </div>
 
-<div class="body" style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
-   <form name="input" action="/savedata" method="post" onsubmit="return checkInfo();" enctype="multipart/form-data">
-    <div class="mydiv">
-        <label for="didian">学号:</label>
-        <input type="text" name="学号">
+            <div class="mydiv">
+                <label>出生日期：</label>
+                <input type="text" name="出生日期">
+            </div>
+            <div class="mydiv">
+                <label>专业：</label>
+                <input type="text" name="专业">
+            </div>
+            <div class="mydiv">
+                <label>班级号：</label>
+                <input type="text" name="班级号">
+            </div>
+            <div class="mydiv">
+                <label>密码：</label>
+                <input type="text" name="密码">
+            </div>
+
+            <div class="mydiv" style="display: none;">
+                <label>密码：</label>
+                <input type="text" value="database" name="database">
+            </div>
+
+            <div class="mydiv" style="display: none;">
+                <label>密码：</label>
+                <input type="text" value="student" name="table">
+            </div>
+
+            <div class="mydiv">
+                <input type="submit" class="rtbtn" value="保存">
+                <input type="button" class="rtbtn" value="返回" onclick="javascript:history.back();">
+            </div>
+        </form>
     </div>
-    <div class="mydiv">
-        <label >姓名</label>
-        <input type="text"  name="姓名">
-    </div>
-    <div class="mydiv">
-        <label >性别：</label>
-        <input type="text"  name="性别">
-    </div>
-    
-    <div class="mydiv">
-        <label >出生日期：</label>
-        <input type="text"  name="出生日期">
-    </div>
-    <div class="mydiv">
-        <label >专业：</label>
-        <input type="text"  name="专业">
-    </div>
-    <div class="mydiv">
-        <label >班级号：</label>
-        <input type="text"  name="班级号">
-    </div>
-     <div class="mydiv">
-        <label >密码：</label>
-        <input type="text"  name="密码">
-    </div>
-    
-     <div class="mydiv" style="display: none;">
-        <label >密码：</label>
-        <input type="text"  value="database" name="database">
-    </div>
-    
-     <div class="mydiv" style="display: none;">
-        <label >密码：</label>
-        <input type="text"  value="student" name="table">
-    </div>
-    
-    <div class="mydiv">
-        <input type="submit" class="rtbtn" value="保存">
-        <input type="button" class="rtbtn"  value="返回" onclick="javascript:history.back();">
-    </div>
-</form>
-</div>
-<script type="text/javascript">
-    function checkInfo(){
-        var kexuhao = document.forms["input"]["kexuhao"].value;
-        if(kexuhao == null || kexuhao == ""){
-            alert("课序号不能为空！");
-            return false;
+    <script type="text/javascript">
+        function checkInfo() {
+            var course_id = document.forms["input"]["kexuhao"].value;
+            if (course_id == null || course_id == "") {
+                alert("课序号不能为空！");
+                return false;
+            }
+            var teaching_max = document.forms["input"]["num"].value;
+            if (teaching_max == null || teaching_max == "") {
+                alert("选课人数上限不能为空！");
+                return false;
+            }
+            var class_addr = document.forms["input"]["didian"].value;
+            if (class_addr == null || class_addr == "") {
+                alert("地点不能为空！！");
+                return false;
+            }
+            return true;
         }
-        var num = document.forms["input"]["num"].value;
-        if(num == null || num == ""){
-            alert("选课人数上限不能为空！");
-            return false;
-        }
-        var didian = document.forms["input"]["didian"].value;
-        if(didian == null || didian == ""){
-            alert("地点不能为空！！");
-            return false;
-        }
-        return true;
-    }
-</script>
+    </script>
 </body>
+
 </html>
