@@ -42,7 +42,7 @@
                 </tr>
                 {% for r in results %}
                 <tr class="tr">
-                    <form name="in" action="{{url_for('piliang')}}" method="post" onsubmit="return checkInfo();">
+                    <form name="in" action="{{url_for('plluru_mark')}}" method="post" onsubmit="return checkInfo();">
                         <td class="mytd">{{r[0]}}</td>
                         <input type="hidden" id="xuehao" value="{{r[0]}}" name="xuehao">
                         <input type="hidden" id="kehao" value="{{kehao}}" name="kehao">
@@ -67,7 +67,7 @@
     <script type="text/javascript">
         function checkInfo() {
             // var ping = document.forms["in"]["pingshi"].value;
-            // var t2 = /^[0-9]*$/;
+            var t2 = /^[0-9]*$/;
             // if(ping == null || ping == ""){
             //     alert("平时成绩不能为空！");
             //     return false;

@@ -185,7 +185,7 @@ def into_stu_mark():
     r, _ = GetSql2(sql)
     return render_template("stu_cha_mark_cap.html", xuehao=xuehao, results=r, result=result, pingshi=pingshi, kaoshi=kaoshi)
 
-#批量输入成绩
+#批量输入成绩页面
 @app.route('/piliang', methods=['GET'])
 def piliang():
     kehao = request.args.get('kehao')
@@ -195,6 +195,24 @@ def piliang():
     #查询这门课的所有学生
     result, _ = GetSql2("select student_num, achievement, achievement_exam from t_student_Course where course_num = '"+str(kehao)+"' and course_id = '"+str(kexuhao)+"'")
     return render_template("piliang_cap.html", results=result, result=r, kehao=kehao, kexuhao=kexuhao, bianhao=bianhao)
+
+#批量录入学生成绩操作
+@app.route('/plluru_mark', methods=['POST'])
+def plluru_mark():
+    xuehao = request.form.get('xuehao')
+    kehao = request.form.get('kehao')
+    kexuhao = request.form.get('kexuhao')
+    pingshi = request.form.get('pingshi')
+    kaoshi = request.form.get('kaoshi')
+    bianhao = request.form.get('bianhao')
+    page = request.form.get('page')
+    sql = "update t_student_Course set achievement = "+pingshi+", achievement_exam = "+kaoshi+" where student_num = '"+xuehao+"' and course_num = '"+kehao+"' and course_id = '"+kexuhao+"'"
+    result = UpdateDataOne(sql)
+    r = request.args.get('result', '')  # 默认值设为空
+    #查询这门课的所有学生
+    result, _ = GetSql2("select student_num, achievement, achievement_exam from t_student_Course where course_num = '"+str(kehao)+"' and course_id = '"+str(kexuhao)+"'")
+    return render_template("piliang_cap.html", results=result, result=r, kehao=kehao, kexuhao=kexuhao, bianhao=bianhao)
+
 
 #删除开设课程
 @app.route('/deleteCource', methods=['GET', 'POST'])
@@ -391,9 +409,9 @@ def kechenglist():
     result,_ = GetSql2("select * from t_course_info")
     return render_template("man_kecheng_cap.html", results=result, result=r)
 
+#单个录入学生成绩
 @app.route('/luru_mark', methods=['POST'])
 def luru_mark():
-    #单个录入学生成绩
     xuehao = request.form.get('xuehao')
     kehao = request.form.get('kehao')
     kexuhao = request.form.get('kexuhao')
@@ -404,6 +422,8 @@ def luru_mark():
     sql = "update t_student_Course set achievement = "+pingshi+", achievement_exam = "+kaoshi+" where student_num = '"+xuehao+"' and course_num = '"+kehao+"' and course_id = '"+kexuhao+"'"
     result = UpdateDataOne(sql)
     return redirect(url_for('tea_cha', bianhao=bianhao, result=result, page=page, kehao=kehao, kexuhao=kexuhao))
+
+
 
 #点击修改密码，将信息传递到修改密码界面
 @app.route('/mima', methods=["GET"])
@@ -425,6 +445,10 @@ def excel_mark():
         bianhao = request.form.get('bianhao')
         #获取文件
         file = request.files.get('file')
+        print(file.filename)
+        if  file.filename=='':
+            return redirect(url_for('excel', bianhao=bianhao))
+        print("aaaaaaaaaaaaaaaa")
         f = file.read()  #文件内容
         data = xlrd.open_workbook(file_contents=f)
         table = data.sheets()[0]
