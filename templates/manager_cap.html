@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
     <title>学生选课和成绩管理系统</title>
     <link rel="stylesheet" type="text/css" href="static/css/action.css">
 </head>
+
 <body class="mybody">
     <div class="mydiv">
         <div class="head">
-            <div class="welcome"><h2>欢迎您，管理员{{name}}</h2></div>
-            <!-- <div class="exit"><h2><a href="/">退出登录</a></h2></div> -->
+            <div class="welcome">
+                <h2>欢迎您，管理员{{name}}</h2>
+            </div>
         </div>
         <div class="context">
             <div class="left">
                 <ul>
-                    <li class="myli"><a href="http://localhost:8081/self_info?bianhao={{name}}" target="iframe">个人中心</a></li>
+                    <li class="myli"><a href="http://localhost:8081/self_info?bianhao={{name}}" target="iframe">个人中心</a>
+                    </li>
                     <li class="myli"><a href="http://localhost:8081/teacherlist" target="iframe">教师信息管理</a></li>
                     <li class="myli"><a href="http://localhost:8081/studentlist" target="iframe">学生信息管理</a></li>
                     <li class="myli"><a href="http://localhost:8081/kechenglist" target="iframe">课程信息管理</a></li>
                     <li class="myli"><a href="{{url_for('course')}}" target="iframe">开课数据管理</a></li>
-                    <li class="myli"><a href="/" >退出登录</a></li>
+                    <li class="myli"><a href="/">退出登录</a></li>
                 </ul>
             </div>
-            <div class="right"><iframe src="http://localhost:8081/feng" width="100%" height="100%" name="iframe" style="font-family:'Times New Roman';border: none;border-left: 1px solid RGBA(231, 77, 130, 1)"></iframe></div>
+            <div class="right"><iframe src="http://localhost:8081/home" width="100%" height="100%" name="iframe"
+                    style="font-family:'Times New Roman';border: none;border-left: 1px solid RGBA(231, 77, 130, 1)"></iframe>
+            </div>
         </div>
     </div>
 </body>
+
 </html>

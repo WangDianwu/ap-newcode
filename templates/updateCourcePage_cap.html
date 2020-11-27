@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
+    <title>学生选课和成绩管理系统</title>
+    <link rel="stylesheet" type="text/css" href="static/css/manager2.css">
+    <style>
+        input[type=submit],
+        input[type=button] {
+            width: 100px;
+            background-color: RGBA(231, 77, 130, 1);
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        label {
+            display: inline-block;
+            width: 20%;
+            float: left;
+            line-height: 40px;
+        }
+
+        select,
+        input[typle=text] {
+            width: 80%;
+            float: left;
+            height: 40px;
+        }
+
+        form>div {
+            overflow: hidden;
+            clear: both;
+        }
+    </style>
+</head>
+
+<body class="mybody">
+    <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
+        <div
+            style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);">
+        </div>
+        <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">添加课程页面</span>
+    </div>
+    <div class="body"
+        style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
+        <form name="input" action="{{url_for('courseinfo_api.updateCourse')}}" method="post" onsubmit="return checkInfo();">
+            <div class="mydiv">
+                <label for="course_num">课程编号:</label>
+                <input type="text" id="course_num" name="course_num" value="{{course_num}}" readonly>
+            </div>
+            <div class="mydiv">
+                <label for="course_name">名称：</label>
+                <input type="text" id="course_name" name="course_name" value="{{course_name}}">
+            </div>
+            <div class="mydiv">
+                <label for="total_hours">总学时：</label>
+                <input type="text" id="total_hours" name="total_hours" value="{{total_hours}}">
+            </div>
+
+            <div class="mydiv">
+                <label for="credit">总分：</label>
+                <input type="text" id="credit" name="credit" value="{{credit}}">
+            </div>
+            <div class="mydiv">
+                <label for="xing">课程类别：</label>
+                <select id="course_type" name="course_type" >
+                    <option value="必修">必修</option>
+                    <option value="专业限选">专业限选</option>
+                    <option value="通选限选">通选限选</option>
+                </select>
+            </div>
+
+            <div class="mydiv">
+                <input type="submit" class="rtbtn" value="保存" >
+                <input type="button" class="rtbtn" value="返回" onclick="javascript:history.back();">
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        if ("{{course_type}}" == "专业限选"){
+            document.getElementById("course_type").value ="专业限选";
+        } else if ("{{course_type}}" == "通选限选"){
+            document.getElementById("course_type").value ="通选限选";
+        } else {
+            document.getElementById("course_type").value ="必修";
+        }
+        function checkInfo() {
+            var course_name = document.forms["input"]["course_name"].value;
+            if (course_name == null || course_name == "") {
+                alert("请输入课程名称");
+                return false;
+            }
+            var total_hours = document.forms["input"]["total_hours"].value;
+            if (total_hours == null || total_hours == "") {
+                alert("请输入总学时");
+                return false;
+            }
+            var credit = document.forms["input"]["credit"].value;
+            if (credit == null || credit == "") {
+                alert("请输入学分");
+                return false;
+            }
+            var course_type = document.forms["input"]["course_type"].value;
+            if (course_type == null || course_type == "") {
+                alert("请选择课程类别");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+
+</html>

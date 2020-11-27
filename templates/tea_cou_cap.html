@@ -1,55 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="static/icon.jpg" rel="icon" type="image/x-icon" />
-		<title>学生选课和成绩管理系统</title>
-		<link rel="stylesheet" type="text/css" href="static/css/teacher.css">
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="static/icon.jpg" rel="icon" type="image/x-icon" />
+	<title>学生选课和成绩管理系统</title>
+	<link rel="stylesheet" type="text/css" href="static/css/teacher.css">
+</head>
 
-	<body class="mybody">
-		<div class="mydiv">
-
-			<div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
-				<div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
-				<span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">教授课程</span>
+<body class="mybody">
+	<div class="mydiv">
+		<div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
+			<div
+				style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);">
 			</div>
-
-			<div style="font-family:'Times New Roman';margin-top: 15px;">
-				<table border="1" class="table">
-					<tr class="tr">
-						<th class="myth">课程编号</th>
-						<th class="myth">课序号</th>
-						<th class="myth">课名</th>
-						<th class="myth">学分</th>
-						<th class="myth">课程类别</th>
-						<th class="myth">开课学期</th>
-						<th class="myth">上课地点</th>
-						<th class="myth">上课时间</th>
-						<th class="myth">选课人数</th>
-						<th class="myth">操作</th>
-					</tr>
-					{% for r in results %}
-					<tr class="tr">
-						<td class="mytd">{{r[0][0]}}</td>
-						<td class="mytd">{{r[0][1]}}</td>
-						<td class="mytd">{{r[0][2]}}</td>
-						<td class="mytd">{{r[0][3]}}</td>
-						<td class="mytd">{{r[0][4]}}</td>
-						<td class="mytd">{{r[0][5]}}</td>
-						<td class="mytd">{{r[0][6]}}</td>
-						<td class="mytd">{{r[0][7]}}周星期{{r[0][8]}}第{{r[0][9]}}大节</td>
-						<td class="mytd">{{r[1][0]}}</td>
-						<td class="mytd">
-							<a href="{{url_for('tea_stu')}}?bianhao={{bianhao}}&kehao={{r[0][0]}}&kexuhao={{r[0][1]}}" class="buttons" style="font-family:'Times New Roman';font-size: 15px;background-color: RGBA(231, 77, 130, 1);color:white;">查询</a>
-						</td>
-					</tr>
-					{% endfor %}
-				</table>
-			</div>
+			<span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">教授课程</span>
 		</div>
-	</body>
+		<div style="font-family:'Times New Roman';margin-top: 15px;">
+			<table border="1" class="table">
+				<tr class="tr">
+					<th class="myth">课程编号</th>
+					<th class="myth">课序号</th>
+					<th class="myth">课名</th>
+					<th class="myth">学分</th>
+					<th class="myth">课程类别</th>
+					<th class="myth">开课学期</th>
+					<th class="myth">上课地点</th>
+					<th class="myth">上课时间</th>
+					<th class="myth">选课人数</th>
+					<th class="myth">操作</th>
+				</tr>
+				{% for r in results %}
+				<tr class="tr">
+					<td class="mytd">{{r[0][0]}}</td>
+					<td class="mytd">{{r[0][1]}}</td>
+					<td class="mytd">{{r[0][2]}}</td>
+					<td class="mytd">{{r[0][3]}}</td>
+					<td class="mytd">{{r[0][4]}}</td>
+					<td class="mytd">{{r[0][5]}}</td>
+					<td class="mytd">{{r[0][6]}}</td>
+					<td class="mytd">{{r[0][7]}}周星期{{r[0][8]}}第{{r[0][9]}}大节</td>
+					<td class="mytd">{{r[1][0]}}</td>
+					<td class="mytd">
+						<a href="{{url_for('tea_stu')}}?bianhao={{bianhao}}&kehao={{r[0][0]}}&kexuhao={{r[0][1]}}"
+							class="buttons"
+							style="font-family:'Times New Roman';font-size: 15px;background-color: RGBA(231, 77, 130, 1);color:white;">查询</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</body>
 
 </html>

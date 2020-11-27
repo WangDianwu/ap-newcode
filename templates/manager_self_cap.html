@@ -1,52 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
     <title>学生选课和成绩管理系统</title>
     <style>
-        table{
-            width:30%;
-            margin:50px auto;
-            height:500px;
-            border-collapse:collapse;
-            text-align:center;
+        table {
+            width: 30%;
+            margin: 50px auto;
+            height: 500px;
+            border-collapse: collapse;
+            text-align: center;
         }
-        table,td{
-            border:solid 1px black;
-            padding:15px 15px 15px 15px;
+
+        table,
+        td {
+            border: solid 1px black;
+            padding: 15px 15px 15px 15px;
         }
-        .button{
+
+        .button {
             width: 80px;
-            height:30px;
+            height: 30px;
             background-color: #2379bc;
-            color:white;
-            text-align:center;
+            color: white;
+            text-align: center;
             text-decoration: none;
-            display:inline-block;
+            display: inline-block;
             border-radius: 4px;
-            padding:8px 10px;
-            margin:10px;
+            padding: 8px 10px;
+            margin: 10px;
         }
     </style>
 </head>
+
 <body class="mybody">
- <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
-    <div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
-    <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">个人信息</span>
-</div>
-<form name="input" action="http://localhost:8081/update_mima" method="post" >
-
-    <div id="table" style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);padding:30px 15px;width: 50%;margin-left: auto;margin-right: auto;border-radius: 5px;margin-top: 15px;box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
-        <span style="font-family:'Times New Roman';display: inline-block;width: 100px;color: RGBA(231, 77, 130, 1);">账号：</span><input type="text" value="{{student[0]}}" name="hao"> <span></span></br></br>
-        <span style="font-family:'Times New Roman';display: inline-block;width: 100px;color: RGBA(231, 77, 130, 1);">密码：</span><input type="password" value="{{student[1]}}" name="mima"><span></span></br></br>
-
-        <div style="font-family:'Times New Roman';text-align: center;">
-            <input class="rtbtn" type="submit" value="保存" style="font-family:'Times New Roman';background: RGBA(231, 77, 130, 1);border: none;color: white">
-
+    <div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
+        <div
+            style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);">
         </div>
+        <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">个人信息</span>
     </div>
-</form>
+    <form name="input" action="http://localhost:8081/update_mima" method="post">
+        <div id="table"
+            style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);padding:30px 15px;width: 50%;margin-left: auto;margin-right: auto;border-radius: 5px;margin-top: 15px;box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
+            <span
+                style="font-family:'Times New Roman';display: inline-block;width: 100px;color: RGBA(231, 77, 130, 1);">账号：</span><input
+                type="text" value="{{student[0]}}" name="hao"> <span></span></br></br>
+            <span
+                style="font-family:'Times New Roman';display: inline-block;width: 100px;color: RGBA(231, 77, 130, 1);">密码：</span><input
+                type="password" value="{{student[1]}}" name="mima"><span></span></br></br>
+
+            <div style="font-family:'Times New Roman';text-align: center;">
+                <input class="rtbtn" type="submit" value="保存"
+                    style="font-family:'Times New Roman';background: RGBA(231, 77, 130, 1);border: none;color: white">
+            </div>
+        </div>
+    </form>
 </body>
+
 </html>

@@ -3,7 +3,8 @@
 
 <head>
 	<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<link href="static/icon.jpg" rel="icon" type="image/x-icon" />
 	<title>学生选课和成绩管理系统</title>
 	<style>
@@ -29,7 +30,8 @@
 			text-align: center;
 			border: 1px solid black;
 			display: inline-block;
-			padding: 5px 8px;font-size: 15px;
+			padding: 5px 8px;
+			font-size: 15px;
 			background-color: RGBA(231, 77, 130, 1);
 			color: white;
 		}
@@ -38,11 +40,13 @@
 
 <body class="mybody">
 	<div style="font-family:'Times New Roman';line-height: 30px;overflow-y: hidden;clear: both;">
-		<div style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);"></div>
+		<div
+			style="font-family:'Times New Roman';float: left;width: 5px;height: 30px;background: RGBA(231, 77, 130, 1);">
+		</div>
 		<span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">修改密码</span>
 	</div>
-
-	<div id="table" style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);padding:30px 15px;width: 50%;margin-left: auto;margin-right: auto;border-radius: 5px;margin-top: 15px;box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
+	<div id="table"
+		style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);padding:30px 15px;width: 50%;margin-left: auto;margin-right: auto;border-radius: 5px;margin-top: 15px;box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
 		<form name="input" action="http://localhost:8081/update_mima" method="post" onsubmit="return checkInfo();">
 			<input type="hidden" id="hao" value="{{hao}}" name="hao">
 			<input type="hidden" id="shenfen" value="{{shenfen}}" name="shenfen">
@@ -55,37 +59,37 @@
 				<input type="text" id="mima2" name="mima2">
 			</div>
 			<div class="mydiv">
-				<input type="submit" value="保存" style="font-family:'Times New Roman';background: RGBA(231, 77, 130, 1);">
+				<input type="submit" value="保存"
+					style="font-family:'Times New Roman';background: RGBA(231, 77, 130, 1);">
 			</div>
 		</form>
 	</div>
-	
 	<script type="text/javascript">
 		function checkInfo() {
 			var m = document.forms["input"]["mima"].value;
 			var t2 = /^[a-zA-Z0-9@#*$!%]*$/;
 			var m2 = document.forms["input"]["mima2"].value;
-			if(m == null || m == "") {
+			if (m == null || m == "") {
 				alert("新密码不能为空！");
 				return false;
-			} else if(m.length < 6 || m.length > 16) {
+			} else if (m.length < 6 || m.length > 16) {
 				alert("请输入正确的密码，长度为6-16位！");
 				return false;
-			} else if(!t2.test(m)) {
+			} else if (!t2.test(m)) {
 				alert("请输入正确的密码,仅可用英文、数字、特殊字符@#*$!%！");
 				return false;
 			}
-			if(m2 == null || m2 == "") {
+			if (m2 == null || m2 == "") {
 				alert("确认新密码不能为空！");
 				return false;
 			}
-			if(m != m2) {
+			if (m != m2) {
 				alert("密码不一致！");
 				return false;
 			}
 			return true;
 		}
-		if('{{result}}' != null && '{{result}}' != "") {
+		if ('{{result}}' != null && '{{result}}' != "") {
 			alert('{{result}}')
 		}
 	</script>

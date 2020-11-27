@@ -231,6 +231,21 @@ def UpdateDataOne(sql):
     CloseDb(conn)
     return result
 
+def InsertDataV(sql):
+    conn = OpenDatabase()
+    cusor = conn.cursor()
+    print(sql)
+    try:
+        cusor.execute(sql)
+        conn.commit()
+        result = "添加成功"
+    except Exception as e:
+        conn.rollback()
+        result = "添加失败"
+    cusor.close()
+    CloseDb(conn)
+    return result
+
 def InsertDataOne(data, tablename):
     conn = OpenDatabase()
     values = []

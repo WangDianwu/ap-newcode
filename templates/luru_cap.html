@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <link href="static/icon.jpg" rel="icon" type="image/x-icon" />
     <title>学生选课和成绩管理系统</title>
     <style>
-        form{
-            width:50%;
-            margin:50px auto;
-            height:500px;
-            text-align:center;
+        form {
+            width: 50%;
+            margin: 50px auto;
+            height: 500px;
+            text-align: center;
         }
-        input[type=text]{
+
+        input[type=text] {
             width: 50%;
             padding: 12px 20px;
             margin: 8px 0;
@@ -21,8 +24,9 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-        input[type=submit]{
-            width:100px;
+
+        input[type=submit] {
+            width: 100px;
             background-color: RGBA(231, 77, 130, 1);
             color: white;
             padding: 14px 20px;
@@ -33,9 +37,11 @@
         }
     </style>
 </head>
+
 <body class="mybody">
     <div class="mydiv">
-        <form name="input" action="{{'luru_mark'}}?bianhao={{bianhao}}&page={{page}}" method="post" onsubmit="return checkInfo();">
+        <form name="input" action="{{'luru_mark'}}?bianhao={{bianhao}}&page={{page}}" method="post"
+            onsubmit="return checkInfo();">
             <input type="hidden" id="xuehao" value="{{xuehao}}" name="xuehao">
             <input type="hidden" id="kehao" value="{{kehao}}" name="kehao">
             <input type="hidden" id="kexuhao" value="{{kexuhao}}" name="kexuhao">
@@ -54,31 +60,27 @@
         </form>
     </div>
     <script type="text/javascript">
-        function checkInfo(){
-            var ping = document.forms["input"]["pingshi"].value;
-            var kao = document.forms["input"]["kaoshi"].value;
-            var t2 = /^[0-9]*$/;
-            if(ping == null || ping == ""){
+        function checkInfo() {
+            var achievement = document.forms["input"]["pingshi"].value;
+            var achievement_exam = document.forms["input"]["kaoshi"].value;
+            var reg = /^[0-9]*$/;
+            if (achievement == null || achievement == "") {
                 alert("平时成绩不能为空！");
                 return false;
-            }
-            else if(!t2.test(ping)){
+            } else if (!reg.test(achievement)) {
                 alert("平时成绩仅限于非负数！！");
                 return false;
-            }
-            else if(ping > 100){
+            } else if (achievement > 100) {
                 alert("平时成绩仅限于0-100之间");
                 return false;
             }
-            if(kao == null || kao == ""){
+            if (achievement_exam == null || achievement_exam == "") {
                 alert("考试成绩不能为空！");
                 return false;
-            }
-            else if(!t2.test(kao)){
+            } else if (!reg.test(achievement_exam)) {
                 alert("考试成绩仅限于非负数！！");
                 return false;
-            }
-            else if(kao > 100){
+            } else if (achievement_exam > 100) {
                 alert("考试成绩仅限于0-100之间");
                 return false;
             }
@@ -86,4 +88,5 @@
         }
     </script>
 </body>
+
 </html>
