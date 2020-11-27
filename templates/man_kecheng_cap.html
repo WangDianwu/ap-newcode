@@ -23,7 +23,7 @@
         </div>
         <div class="head">
             <div style="font-family:'Times New Roman';float:left;">
-                <form class="form-inline" action="{{url_for('admin_api.selectCourse1')}}" method="post">
+                <form class="form-inline" action="{{url_for('courseinfo_api.selectCourse1')}}" method="post">
                     <div class="form-group">
                         <label for="kehao">名称</label>
                         <input type="text" name="course_name">
@@ -32,11 +32,11 @@
                 </form>
             </div>
             <div style="font-family:'Times New Roman';float:right;">
-                <a class="button rtbtn" href="{{url_for('admin_api.add_kecheng')}}">添加课程</a>
+                <a class="button rtbtn" href="{{url_for('courseinfo_api.add_kecheng')}}">添加课程</a>
                 <a class="button rtbtn" href="javascript:void(0);" id="delselected">删除选中项</a>
             </div>
         </div>
-        <form id="form" action="{{url_for('admin_api.deleteCource1')}}" method="post">
+        <form id="form" action="{{url_for('courseinfo_api.deleteCource1')}}" method="post">
             <table border="1" class="table">
                 <tr class="tr">
                     <th class="myth"><input type="checkbox" id="firstcb"></th>
@@ -57,10 +57,10 @@
                     <td class="mytd">{{r[4]}}</td>
 
                     <td class="mytd"><a
-                            href="{{url_for('admin_api.updateCourcePage')}}?course_num={{r[0]}}&course_name={{r[1]}}&total_hours={{r[2]}}&credit={{r[3]}}&course_type={{r[4]}}"
+                            href="{{url_for('courseinfo_api.updateCourcePage')}}?course_num={{r[0]}}&course_name={{r[1]}}&total_hours={{r[2]}}&credit={{r[3]}}&course_type={{r[4]}}"
                             class="buttons rtbtn2">修改</a>&nbsp;
                         <a class="buttons rtbtn2"
-                            href="{{url_for('admin_api.deleteCource1')}}?course_num={{r[0]}}">删除</a></td>
+                            href="{{url_for('courseinfo_api.deleteCource1')}}?course_num={{r[0]}}">删除</a></td>
                 </tr>
                 {% endfor %}
             </table>

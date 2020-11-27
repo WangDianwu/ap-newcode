@@ -9,14 +9,14 @@ import time
 #引入登陆模块
 from  login import  login_api
 #引入后台模块
-from admin import admin_api
+from CourseInfo import courseinfo_api
 
 app = Flask(__name__)
 app.secret_key = "jJInfdd4444dewp(f8e5ffkd*9&jfkl"
 # 注册登录接口    
 app.register_blueprint(login_api)
 #注册后台模块
-app.register_blueprint(admin_api)
+app.register_blueprint(courseinfo_api)
 
 #修改开设课程
 @app.route('/updateCource', methods=['POST'])
