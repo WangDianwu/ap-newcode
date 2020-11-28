@@ -52,28 +52,44 @@
         <form name="input" action="{{url_for('addCourse')}}" method="post" onsubmit="return checkInfo();">
             <div class="mydiv">
                 <label for="didian">编号:</label>
-                <input type="text" id="didian" name="编号">
+                <input type="text" id="didian" name="teacher_num">
             </div>
             <div class="mydiv">
                 <label for="zhou">姓名：</label>
-                <input type="text" id="zhou" name="姓名">
+                <input type="text" id="zhou" name="teacher_name">
             </div>
             <div class="mydiv">
                 <label for="zhou">性别：</label>
-                <input type="text" id="zhou" name="性别">
-            </div>
+                <select name="sex">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select> </div>
 
             <div class="mydiv">
                 <label for="zhou">所属系所：</label>
-                <input type="text" id="zhou" name="所属系所">
+                <input type="text" id="zhou" name="dep_num">
             </div>
             <div class="mydiv">
                 <label for="zhou">职称：</label>
-                <input type="text" id="zhou" name="职称">
+                <select name="title">
+                    <option value="助教">助教</option>
+                    <option value="讲师">讲师</option>
+                    <option value="副教授">副教授/option>
+                    <option value="教授">教授</option>
+                </select>
             </div>
             <div class="mydiv">
                 <label for="zhou">密码：</label>
-                <input type="text" id="zhou" name="密码">
+                <input type="text" id="zhou" name="pwd">
+            </div>
+            <div class="mydiv" style="display: none;">
+                <label>密码：</label>
+                <input type="text" value="database" name="database">
+            </div>
+
+            <div class="mydiv" style="display: none;">
+                <label>密码：</label>
+                <input type="text" value="t_teacher_info" name="table">
             </div>
 
             <div class="mydiv">
