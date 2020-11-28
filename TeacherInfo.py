@@ -82,7 +82,7 @@ def addteacher():
         return render_template("man_teacher_cap.html", result=resultadd,results=results)
     else:
        return render_template("man_teacher_cap.html", result="添加失败")
-
+#教师信息跳转修改页
 @teacher_api.route("/up_teacher_cap2")
 def up_teacher_cap2():
     x = request.args.get('teacher_num')
@@ -94,6 +94,7 @@ def up_teacher_cap2():
     print(result)
     return render_template("up_teacher_cap2.html",result=result,xisuo=result1)
 
+#教师信息修改
 @teacher_api.route("/updatatecher",methods=['POST'])
 def updatatecher():
     if request.method == 'POST':

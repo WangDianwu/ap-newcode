@@ -23,7 +23,7 @@
         </div>
         <div class="head">
             <div style="font-family:'Times New Roman';float:left;">
-                <form class="form-inline" action="{{url_for('cha1')}}" method="post"  enctype="multipart/form-data">
+                <form class="form-inline" action="{{url_for('student_api.qstudent')}}" method="post"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="kehao">姓名</label>
                         <input type="text" name="student_name">
@@ -32,11 +32,11 @@
                 </form>
             </div>
             <div style="font-family:'Times New Roman';float:right;">
-                <a class="button rtbtn" href="{{url_for('add_student')}}">添加学生</a>
+                <a class="button rtbtn" href="{{url_for('student_api.add_student')}}">添加学生</a>
                 <a class="button rtbtn" href="javascript:void(0);" id="delselected">删除选中项</a>
             </div>
         </div>
-        <form id="form" action="{{url_for('deldata1')}}" method="post">
+        <form id="form" action="{{url_for('student_api.deldata1')}}" method="post">
             <table border="1" class="table">
                 <tr class="tr">
                     <th class="myth"><input type="checkbox" id="firstcb"></th>
@@ -59,7 +59,7 @@
                     <td class="mytd">{{r[5]}}</td>
               
                     <td class="mytd"><a href="/add_student_cap2?student_num={{r[0]}}" class="buttons rtbtn2">修改</a>&nbsp;
-                        <a class="buttons rtbtn2" href="/deldata1?学号={{r[0]}}&table=student&database=database">删除</a></td>
+                        <a class="buttons rtbtn2" href="/deldata1?student_num={{r[0]}}&table=t_student_info&database=database">删除</a></td>
                     </tr>
                     {% endfor %}
                 </table>

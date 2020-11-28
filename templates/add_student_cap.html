@@ -46,93 +46,84 @@
         </div>
         <span style="font-family:'Times New Roman';float: left;margin-left: 15px;font-weight: bold;">添加学生页面</span>
     </div>
-
     <div class="body"
         style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
-        <form name="input" action="/savedata" method="post" onsubmit="return checkInfo();"
+        <form name="input" action="/add_studentdata" method="post" onsubmit="return checkInfo();"
             enctype="multipart/form-data">
             <div class="mydiv">
                 <label for="didian">学号:</label>
-                <input type="text" name="学号">
+                <input type="text" name="student_num">
             </div>
             <div class="mydiv">
                 <label>姓名</label>
-                <input type="text" name="姓名">
+                <input type="text" name="student_name">
             </div>
             <div class="mydiv">
                 <label>性别：</label>
-                <input type="text" name="性别">
+                <select name="sex">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
             </div>
 
-<div class="body" style="font-family:'Times New Roman';border: 1px solid RGBA(231, 77, 130, 1);box-shadow: 5px 5px RGBA(242, 200, 217, 1);">
-   <form name="input" action="/savedata1" method="post" onsubmit="return checkInfo();" enctype="multipart/form-data">
-    <div class="mydiv">
-        <label for="didian">学号:</label>
-        <input type="text" name="学号">
+            <div class="mydiv">
+                <label>出生日期：</label>
+                <input type="text" name="birth_date">
+            </div>
+            <div class="mydiv">
+                <label>专业：</label>
+                <!-- <input type="text" name="sp_num"> -->
+                <select id="sp_num" name="sp_num">
+                    {% for t in sp %}
+                    <option value="{{t[0]}}">{{t[1]}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mydiv">
+                <label>班级号：</label>
+                <!-- <input type="text" name="class_num"> -->
+                <select id="class_num" name="class_num">
+                    {% for t in cl %}
+                    <option value="{{t[0]}}">{{t[1]}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mydiv">
+                <label>密码：</label>
+                <input type="text" name="pwd">
+            </div>
+            <div class="mydiv">
+                <input type="submit" class="rtbtn" value="保存">
+                <input type="button" class="rtbtn" value="返回" onclick="javascript:history.back();">
+            </div>
+        </form>
     </div>
-    <div class="mydiv">
-        <label >姓名</label>
-        <input type="text"  name="姓名">
-    </div>
-    <div class="mydiv">
-        <label >性别：</label>
-        <select name="性别">
-            <option value="男">男</option>
-            <option value="女">女</option>
-        </select>
-    </div>
-    
-    <div class="mydiv">
-        <label >出生日期：</label>
-        <input type="date"  name="出生日期">
-    </div>
-    <div class="mydiv">
-        <label >专业：</label>
-        <input type="text"  name="专业">
-    </div>
-    <div class="mydiv">
-        <label >班级号：</label>
-        <input type="text"  name="班级号">
-    </div>
-     <div class="mydiv">
-        <label >密码：</label>
-        <input type="text"  name="密码">
-    </div>
-    
-     <div class="mydiv" style="display: none;">
-        <label >密码：</label>
-        <input type="text"  value="database" name="database">
-    </div>
-    
-     <div class="mydiv" style="display: none;">
-        <label >密码：</label>
-        <input type="text"  value="student" name="table">
-    </div>
-    
-    <div class="mydiv">
-        <input type="submit" class="rtbtn" value="保存">
-        <input type="button" class="rtbtn"  value="返回" onclick="javascript:history.back();">
-    </div>
-    <script type="text/javascript">
-        function checkInfo() {
-            var course_id = document.forms["input"]["kexuhao"].value;
-            if (course_id == null || course_id == "") {
-                alert("课序号不能为空！");
-                return false;
-            }
-            var teaching_max = document.forms["input"]["num"].value;
-            if (teaching_max == null || teaching_max == "") {
-                alert("选课人数上限不能为空！");
-                return false;
-            }
-            var class_addr = document.forms["input"]["didian"].value;
-            if (class_addr == null || class_addr == "") {
-                alert("地点不能为空！！");
-                return false;
-            }
-            return true;
+</body>
+<script type="text/javascript">
+    function checkInfo() {
+        var student_num = document.forms["input"]["student_num"].value;
+        if (student_num == null || student_num == "") {
+            alert("请输入学号");
+            return false;
         }
-    </script>
+        var student_name = document.forms["input"]["student_name"].value;
+        if (student_name == null || student_name == "") {
+            alert("请输入姓名");
+            return false;
+        }
+        var birth_date = document.forms["input"]["birth_date"].value;
+        if (birth_date == null || birth_date == "") {
+            alert("请输入出生日期");
+            return false;
+        }
+        var pwd = document.forms["input"]["pwd"].value;
+        if (pwd == null || pwd == "") {
+            alert("请输入密码");
+            return false;
+        }
+        return true;
+    }
+</script>
 </body>
 
 </html>
