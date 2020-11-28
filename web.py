@@ -5,8 +5,22 @@ from flask import Flask, redirect, url_for, request, Response, render_template, 
 from sql.sqlite3 import *
 import json
 import time
+
+#引入登陆模块
+from  login import  login_api
+#引入课程管理信息模块
+from CourseInfo import courseinfo_api
+
 app = Flask(__name__)
 app.secret_key = "jJInfdd4444dewp(f8e5ffkd*9&jfkl"      # flash的消息都存储在session，需要一个会话密匙，密匙随便输入就行，如果对保密性要求高的话，可以使用相关的密匙生成函数，不在细讲
+
+# 注册登录接口    
+app.register_blueprint(login_api)
+#注册后课程信息管理模块
+app.register_blueprint(courseinfo_api)
+
+
+
 @app.route('/updateCource', methods=['POST'])
 def updateCource():
     #修改开设课程
