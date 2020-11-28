@@ -93,6 +93,7 @@ def deleteCource1():
             #一个一个删除数据
             sql = "delete from t_course_info where course_num = '"+str(temp)+"'"
             result1 = DelDataByIdOne(sql)
+            print(sql)
             if result1 == '删除成功':
                 continue
             else:
