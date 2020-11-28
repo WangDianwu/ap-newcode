@@ -824,7 +824,7 @@ def getdata():
     database = request.args.get('database','erro')
     return json.dumps({"msg":"获取成功","data":useSqliteSelect(database,table)})
 
- @app.route("/add_teacher_cap2")
+@app.route("/add_teacher_cap2")
 def add_teacher_cap2():
     x = request.args.get('teacher_num')
     result,_ = GetSql2("select * from t_teacher_info where teacher_num = "+str(x))
