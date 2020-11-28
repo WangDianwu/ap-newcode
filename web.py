@@ -10,13 +10,17 @@ import time
 from  login import  login_api
 #引入课程管理信息模块
 from CourseInfo import courseinfo_api
+#引入开课数据管理模块
+from CourseData import coursedata_api
 
 app = Flask(__name__)
 app.secret_key = "jJInfdd4444dewp(f8e5ffkd*9&jfkl"
 # 注册登录接口    
 app.register_blueprint(login_api)
-#注册后课程信息管理模块
+#注册课程信息管理模块
 app.register_blueprint(courseinfo_api)
+#注册开课数据管理模块
+app.register_blueprint(coursedata_api)
 
 #修改开设课程
 @app.route('/updateCource', methods=['POST'])
@@ -52,20 +56,6 @@ def luru():
 
     return render_template("luru_cap.html", xuehao=xuehao, kehao=kehao, kexuhao=kexuhao, bianhao=bianhao, page=page)
 
-#查询开设课程
-@app.route('/selectCourse', methods=['POST'])
-def selectCourse():
-    r = request.args.get('result', '')
-    kehao = request.form.get('kehao')
-    kexuhao = request.form.get('kexuhao')
-    # 查询教师授课表
-    result, _ = GetSql2("select * from t_teaching where course_num = '"+str(kehao)+"' and course_id = '"+str(kexuhao)+"'")
-    # 查询开课班级表
-    for i in range(len(result)):
-        result1, _ = GetSql2("select calss_name from t_open_class, t_class_info where t_open_class.class_num = t_class_info.class_num and course_num = '" + str(
-            result[i][0]) + "' and course_id = '" + str(result[i][1]) + "'")
-        result[i] = (result[i], result1)
-    return render_template("man_cou_cap.html", results=result, result=r)
 
 #查询学生信息表
 @app.route('/studentlist', methods=['POST', 'GET'])
@@ -187,46 +177,7 @@ def plluru_mark():
     return render_template("piliang_cap.html", results=result, result=r, kehao=kehao, kexuhao=kexuhao, bianhao=bianhao)
 
 
-#删除开设课程
-@app.route('/deleteCource', methods=['GET', 'POST'])
-def deleteCource():
-    if request.method == 'GET':
-        kehao = request.args.get('kehao')
-        kexuhao = request.args.get('kexuhao')
-        tea = request.args.get('tea')
-        sql1 = "delete from t_teaching where course_num = '"+str(kehao)+"' and course_id = '"+str(kexuhao)+"' and teacher_num = '"+str(tea)+"'"
-        result1 = DelDataByIdOne(sql1)
-        sql2 = "delete from t_open_class where course_num = '"+str(kehao)+"' and course_id = '"+str(kexuhao)+"'"
-        result2 = DelDataByIdOne(sql2)
-        if result1 == '删除成功' and result2 == '删除成功':
-            result = '删除成功'
-        else:
-            result = '删除失败'
-        return redirect(url_for('course', result=result))
-    else:
-        #批量删除
-        couids = request.form.getlist('couid')
-        ke = []
-        flag = 0
-        for couid in couids:
-            index = couid.find('+')
-            index2 = couid.find('+', index+1)
-            dic = {}
-            dic['kehao'] = couid[:index]
-            dic['kexuhao'] = couid[index + 1:index2]
-            dic['tea'] = couid[index2+1:]
-            #删除数据
-            result1 = DelDataByIdOne("delete from t_teaching where course_num = '"+str(dic['kehao'])+"' and course_id = '"+str(dic['kexuhao'])+"' and teacher_num = '"+str(dic['tea'])+"'")
-            result2 = DelDataByIdOne("delete from t_open_class where course_num = '"+str(dic['kehao'])+"' and course_id = '"+str(dic['kexuhao'])+"'")
-            if result1 == '删除成功' and result2 == '删除成功':
-                continue
-            else:
-                flag = 1
-        if flag == 1:
-            result = '删除失败'
-        else:
-            result = '删除成功'
-        return redirect(url_for('course', result=result))
+
 
 #查询选修该课程的学生名单
 @app.route('/tea_stu', methods=['GET'])
@@ -323,17 +274,7 @@ def sel_cou():
         result = InsertData(data, "t_student_Course")
         return redirect(url_for('into_bixiu', xuehao=xuehao, result=result))
 
-@app.route('/add_open', methods=['POST', 'GET'])
-def add_open():
-    #添加开设课程页面
-    #把没有开课的课程编号传过去
-    kehao, _ = GetSql2("select course_num from t_course_info where course_num not in (select course_num from t_teaching)")
-    #查询所有的教师编号传过去
-    tea, _ = GetSql2("select teacher_num from t_teacher_info")
-    #查询所有的班级
-    ban, _ = GetSql2("select class_num from t_class_info")
 
-    return render_template("add_open_cap.html", kehao=kehao, tea=tea, ban=ban)
 
 @app.route('/update_mima', methods=['POST'])
 def update_password():
@@ -500,52 +441,6 @@ def into_bixiu():
     #获取剩余人数
     return render_template("bixiu_cap.html", xuehao=xuehao, results=result, page_num=page_num, current_page=current_page, result_num = result_num, result = alert)
 
-#将所有的教师授课信息显示出来
-@app.route('/course', methods=['POST', 'GET'])
-def course():
-    r = request.args.get('result', '')
-    #查询教师授课表
-    result,_ = GetSql2("select * from t_teaching")
-    #查询开课班级表
-    for i in range(len(result)):
-        result1, _ = GetSql2("select calss_name from t_open_class, t_class_info where t_open_class.class_num = t_class_info.class_num and course_num = '"+str(result[i][0])+"' and course_id = '"+str(result[i][1])+"'")
-        result[i] = (result[i], result1)
-    return render_template("man_cou_cap.html", results=result, result=r)
-
- #添加开设课程
-@app.route('/addCourse', methods=['POST', 'GET'])
-def addCourse():
-    if request.method == 'POST':
-        #获取信息
-        kehao = request.form.get('kehao')
-        kexuhao = request.form.get('kexuhao')
-        tea = request.form.get('tea')
-        num = request.form.get('num')
-        kaike = request.form.get('kaike')
-        didian = request.form.get('didian')
-        zhou = request.form.get('zhou')
-        xing = request.form.get('xing')
-        jie = request.form.get('jie')
-        opens = request.form.getlist('open')
-        #将开课信息存储到数据库
-        data = dict(
-            course_num = kehao,
-            course_id = kexuhao,
-            teacher_num = tea,
-            teaching_max = num,
-            open_date = kaike,
-            class_addr = didian,
-            weeks_count =zhou,
-            week_num = xing,
-            sections_num = jie
-        )
-        result = InsertDataOne(data, "t_teaching")
-        for o in opens:
-            data1 = dict(course_num=kehao, course_id=kexuhao, class_num=o)
-            InsertDataOne(data1, "t_open_class")
-        return redirect(url_for('course', result=result))
-    else:
-        return redirect(url_for('add_open'))
 
 # 单个修改学生成绩
 @app.route('/xiugai_mark', methods=['POST'])

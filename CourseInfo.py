@@ -1,3 +1,4 @@
+#开课信息管理
 import string
 
 import xlrd as xlrd

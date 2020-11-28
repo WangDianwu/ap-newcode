@@ -23,7 +23,7 @@
         </div>
         <div class="head">
             <div style="font-family:'Times New Roman';float:left;">
-                <form class="form-inline" action="{{url_for('selectCourse')}}" method="post">
+                <form class="form-inline" action="{{url_for('coursedata_api.selectCourse')}}" method="post">
                     <div class="form-group">
                         <label for="kehao">课程编号</label>
                         <select id="kehao" class="kehao" name="kehao">
@@ -40,11 +40,11 @@
                 </form>
             </div>
             <div style="font-family:'Times New Roman';float:right;">
-                <a class="button rtbtn" href="{{url_for('add_open')}}">添加开设课程</a>
+                <a class="button rtbtn" href="{{url_for('coursedata_api.add_open')}}">添加开设课程</a>
                 <a class="button rtbtn" href="javascript:void(0);" id="delselected">删除选中项</a>
             </div>
         </div>
-        <form id="form" action="{{url_for('deleteCource')}}" method="post">
+        <form id="form" action="{{url_for('coursedata_api.deleteCourcedata')}}" method="post">
             <table border="1" class="table">
                 <tr class="tr">
                     <th class="myth"><input type="checkbox" id="firstcb"></th>
@@ -75,10 +75,10 @@
                         {% endfor %}
                     </td>
                     <td class="mytd"><a
-                            href="{{url_for('updateCourcePage')}}?kehao={{r[0][0]}}&kexuhao={{r[0][1]}}&tea={{r[0][2]}}"
+                            href="{{url_for('coursedata_api.updateCourcePagedata')}}?kehao={{r[0][0]}}&kexuhao={{r[0][1]}}&tea={{r[0][2]}}"
                             class="buttons rtbtn2">修改</a>&nbsp;
                         <a class="buttons rtbtn2"
-                            href="{{url_for('deleteCource')}}?kehao={{r[0][0]}}&kexuhao={{r[0][1]}}&tea={{r[0][2]}}">删除</a>
+                            href="{{url_for('coursedata_api.deleteCourcedata')}}?kehao={{r[0][0]}}&kexuhao={{r[0][1]}}&tea={{r[0][2]}}">删除</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -93,7 +93,7 @@
             document.getElementById("delselected").onclick = function () {
                 if (confirm("您确定要删除选中开课信息吗？")) {
                     var flag = false;
-                    var cbs = document.getElementById("couid");
+                    var cbs = document.getElementsByName("couid");
                     for (var i = 0; i < cbs.length; i++) {
                         if (cbs[i].checked) {
                             flag = true;
@@ -108,7 +108,7 @@
                 }
             }
             document.getElementById("firstcb").onclick = function () {
-                var cbs = document.getElementById("couid");
+                var cbs = document.getElementsByName("couid");
                 for (var i = 0; i < cbs.length; i++) {
                     cbs[i].checked = this.checked;
                 }
