@@ -12,6 +12,8 @@ from  login import  login_api
 from CourseInfo import courseinfo_api
 #引入开课数据管理模块
 from CourseData import coursedata_api
+#引入教师信息
+from TeacherInfo import  teacher_api
 
 app = Flask(__name__)
 app.secret_key = "jJInfdd4444dewp(f8e5ffkd*9&jfkl"
@@ -21,6 +23,9 @@ app.register_blueprint(login_api)
 app.register_blueprint(courseinfo_api)
 #注册开课数据管理模块
 app.register_blueprint(coursedata_api)
+app.register_blueprint(teacher_api)
+
+
 
 #修改开设课程
 @app.route('/updateCource', methods=['POST'])
@@ -64,11 +69,6 @@ def studentlist():
     result,_ = GetSql2("select * from t_student_info")
     return render_template("man_student_cap.html", results=result, result=r)
 
-
-#新增教师
-@app.route('/add_teacher', methods=['POST', 'GET'])
-def add_teacher():
-    return render_template("add_teacher_cap.html")
 
 #通选
 @app.route('/tongxuan', methods=["GET"])
@@ -129,12 +129,7 @@ def self_info():
         result, _ = GetSql2("select sys_num, pwd  from t_sys_info where t_sys_info.sys_num = '" + bianhao + "'")
         return render_template("manager_self_cap.html", student=result[0])
 
-#查询教师授课表
-@app.route('/teacherlist', methods=['POST', 'GET'])
-def teacherlist():
-    r = request.args.get('result', '')
-    result,_ = GetSql2("select * from t_teacher_info")
-    return render_template("man_teacher_cap.html", results=result, result=r)
+
 
 #学生查询成绩页面
 @app.route('/stu_mark', methods=['POST', 'GET'])
@@ -719,11 +714,7 @@ def getdata():
     database = request.args.get('database','erro')
     return json.dumps({"msg":"获取成功","data":useSqliteSelect(database,table)})
 
-@app.route("/add_teacher_cap2")
-def add_teacher_cap2():
-    x = request.args.get('teacher_num')
-    result,_ = GetSql2("select * from t_teacher_info where teacher_num = "+str(x))
-    return render_template("add_teacher_cap2.html",result=result)
+
    
 @app.route("/updatedata2",methods=['POST'])
 def updatedata2():
@@ -740,56 +731,9 @@ def updatedata2():
 
     return render_template("man_teacher_cap.html", results=result, result=r)
 
-@app.route("/deldata2",methods=['GET','POST'])
-def deldata2():
-    r = ''
-    if request.method == 'POST':
-        #是批量删除
-        couids = request.form.getlist('couid')
-        # couid是列表的形式，['12301+1+45601', '12302+1+45602']，用字典的方式获取数据
-        ke = []
-        flag = 0
-        for couid in couids:
-            #将数据库中的信息删除
-            result1 = DelDataByIdOne("delete from t_teacher_info where teacher_num = '"+couid+"'")
-            print(result1)
-        result,_ = GetSql2("select * from t_teacher_info")
-        return render_template("man_teacher_cap.html", results=result, result=r)
-    # 根据id删除数据
-    table = request.args.get('table','erro')
-    database = request.args.get('database','erro')
-    apath = table
-    useSqliteDelete({"database":database,'table':table,"id":request.args.get('id','erro'),'teacher_num':request.args.get('teacher_num','erro')},'teacher_num')
-    result,_ = GetSql2("select * from t_teacher_info")
-    print(result)
-    return render_template("man_teacher_cap.html", results=result, result=r)
 
-@app.route("/cha2",methods=['POST'])
-def cha2():
-    # 根据id删除数据
-    data = request.get_data().decode('utf-8')
-    data = request.form.to_dict()
-    print(data)
-    result,_ = GetSql2("select * from t_teacher_info where teacher_name = '"+str(data["teacher_name"])+"'"  )
-    # print(result)
-    # print(result)
 
-    return render_template("man_teacher_cap.html", results=result)
 
-@app.route("/savedata2",methods=['POST'])
-def savedata2():
-    # 上传数据
-    data = request.get_data().decode('utf-8')
-    data = request.form.to_dict()
-    # data = json.loads(data)
-    print(data)
-    useSqliteInsert(data)
-    r = request.args.get('result', '')
-    #查询教师授课表
-    result,_ = GetSql2("select * from t_teacher_info")
-    print(result)
-
-    return render_template("man_teacher_cap.html", results=result, result=r)
 
 
 
